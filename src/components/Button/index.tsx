@@ -1,10 +1,21 @@
 import React from 'react';
-import theme from '../../assets/styles/theme';
 import { ButtonInput } from './style';
 
-const Button: React.ElementType = () => (
-  <ButtonInput width={300} height={60} backgroundColor={theme.colors.mainRed}>
-    Clique aqui
+export interface ButtonProps {
+  width?: number;
+  height?: number;
+  backgroundColor?: string;
+  text: string;
+}
+
+const Button: React.ElementType<ButtonProps> = ({
+  width,
+  height,
+  backgroundColor,
+  text,
+}) => (
+  <ButtonInput width={width} height={height} backgroundColor={backgroundColor}>
+    {text}
   </ButtonInput>
 );
 
