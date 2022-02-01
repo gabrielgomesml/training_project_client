@@ -13,7 +13,7 @@ const Test: React.FC = () => {
         width={250}
         height={45}
         backgroundColor={theme.colors.mainRed}
-        text="Login"
+        text="Logout"
       />
     </>
   );
