@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import theme from '../../assets/styles/theme';
 import { Button, Input } from '../../components';
+import { useAuth } from '../../hooks/auth';
 import Logo from '../../assets/icons/cinema.png';
 import {
   MainContainer,
@@ -12,6 +13,7 @@ import {
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { signIn, signOut } = useAuth();
 
   return (
     <MainContainer>
