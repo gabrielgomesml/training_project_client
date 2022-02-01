@@ -2,14 +2,14 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import PrivateRoute from './PrivateRoutes';
 
-import { Login } from '../pages';
+import { Login, Test } from '../pages';
 
 const PagesRoutes: React.FC = () => (
   <Switch>
     <Route path="/login" component={Login} />
-    <PrivateRoute path="/teste" component={Login} />
+    <PrivateRoute path="/test" component={Test} />
     <Route>
-      <Redirect to="/" />
+      <Redirect to="/login" />
     </Route>
   </Switch>
 );

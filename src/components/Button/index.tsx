@@ -6,6 +6,7 @@ export interface ButtonProps {
   height?: number;
   backgroundColor?: string;
   text: string;
+  handleButton?: () => void;
 }
 
 const Button: React.ElementType<ButtonProps> = ({
@@ -13,8 +14,14 @@ const Button: React.ElementType<ButtonProps> = ({
   height,
   backgroundColor,
   text,
+  handleButton,
 }) => (
-  <ButtonInput width={width} height={height} backgroundColor={backgroundColor}>
+  <ButtonInput
+    onClick={handleButton}
+    width={width}
+    height={height}
+    backgroundColor={backgroundColor}
+  >
     {text}
   </ButtonInput>
 );

@@ -13,7 +13,7 @@ import {
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { signIn, signOut } = useAuth();
+  const { signIn } = useAuth();
 
   return (
     <MainContainer>
@@ -32,6 +32,7 @@ const Login: React.FC = () => {
           />
         </InputsContainer>
         <Button
+          handleButton={() => signIn({ email, password })}
           width={250}
           height={45}
           backgroundColor={theme.colors.mainRed}
