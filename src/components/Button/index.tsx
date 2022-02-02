@@ -18,9 +18,9 @@ const Button: React.ElementType<ButtonProps> = ({
 }) => (
   <ButtonInput
     onClick={handleButton}
-    width={width}
-    height={height}
-    backgroundColor={backgroundColor}
+    $width={width}
+    $height={height}
+    $backgroundColor={backgroundColor}
   >
     {text}
   </ButtonInput>
