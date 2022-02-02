@@ -7,10 +7,10 @@ import { Login, NotFound, Test } from '../pages';
 const PagesRoutes: React.FC = () => (
   <Switch>
     <Route path="/login" component={Login} />
-    <Route path="*" component={NotFound} />
+    <Route path="/not-found" component={NotFound} />
     <PrivateRoute path="/test" component={Test} />
     <Route>
-      <Redirect to="/login" />
+      <Redirect to="/not-found" />
     </Route>
   </Switch>
 );

@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useState, useContext } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useState,
+  useContext,
+  useMemo,
+} from 'react';
 import api from '../services/api';
 
 interface User {
@@ -56,11 +62,16 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({} as AuthState);
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({
+      user: data.user,
+      signIn,
+      signOut,
+    }),
+    [data.user, signIn, signOut],
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = (): AuthContextProps => {
