@@ -7,9 +7,9 @@ export interface ButtonProps {
 }
 
 export const ButtonInput = styled.button<ButtonProps>`
-  background: ${(props: ButtonProps) => props.backgroundColor || 'white'};
-  width: ${(props: ButtonProps) => props.width || 208}px;
-  height: ${(props: ButtonProps) => props.height || 30}px;
+  background: ${(props) => props.backgroundColor || 'white'};
+  width: ${(props) => props.width || 208}px;
+  height: ${(props) => props.height || 30}px;
   font-size: ${(props) => (props.height ? props.height / 2.5 : 10)}px;
   border-radius: 50px;
   cursor: pointer;

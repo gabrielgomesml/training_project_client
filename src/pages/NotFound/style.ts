@@ -10,19 +10,12 @@ export const MainContainer = styled.section`
   align-items: center;
 `;
 
-export const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  align-items: center;
+export const Title = styled.h1`
+  font-size: 100px;
 `;
 
-export const InputsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
+export const Subtitle = styled.h3``;
 
-export const LogoImage = styled.img`
+export const Image = styled.img`
   width: 200px;
 `;
