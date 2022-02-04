@@ -4,6 +4,7 @@ import {
   RouteProps as ReactRouteProps,
   Redirect,
 } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import { useAuth } from '../hooks/auth';
 import api from '../services/api';
 
@@ -15,7 +16,7 @@ const PrivateRoute: React.FC<RouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  const token = localStorage.getItem('@training-project:token');
+  const token = Cookies.get('@training-project:token');
   const { signOut } = useAuth();
 
   return (
@@ -31,7 +32,7 @@ const PrivateRoute: React.FC<RouteProps> = ({
           },
           body: JSON.stringify({}),
         };
-        if (token) {
+        if (token && signOut) {
           fetch(`${api}verify-token`, requestOptions).catch(() => {
             signOut();
           });

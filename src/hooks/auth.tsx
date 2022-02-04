@@ -7,6 +7,7 @@ import React, {
   useContext,
   useMemo,
 } from 'react';
+import Cookies from 'js-cookie';
 import api from '../services/api';
 
 interface User {
@@ -33,8 +34,8 @@ const AuthContext = createContext<AuthContextProps>({});
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
-    const user = localStorage.getItem('@training-project:user');
-    const token = localStorage.getItem('@training-project:token');
+    const user = Cookies.get('@training-project:user');
+    const token = Cookies.get('@training-project:token');
 
     if (user && token) {
       return { user: JSON.parse(user), token };
@@ -52,18 +53,21 @@ export const AuthProvider: React.FC = ({ children }) => {
       },
       body: JSON.stringify({ email, password }),
     };
-    const response = await fetch(`${api}user-auth`, requestOptions);
+    const response = await fetch(`${api}user-auth`, {
+      ...requestOptions,
+      credentials: 'include',
+    });
 
     const signInData = await response.json();
     const { user, token } = signInData;
 
-    localStorage.setItem('@training-project:user', JSON.stringify(user));
-    localStorage.setItem('@training-project:token', token);
+    Cookies.set('@training-project:user', JSON.stringify(user));
+    Cookies.set('@training-project:token', JSON.stringify(token));
   }, []);
 
   const signOut = useCallback(() => {
-    localStorage.removeItem('@training-project:user');
-    localStorage.removeItem('@training-project:token');
+    Cookies.remove('@training-project:token');
+    Cookies.remove('@training-project:user');
 
     setData({});
   }, []);
