@@ -9,6 +9,7 @@ const PagesRoutes: React.FC = () => (
     <Route path="/login" component={Login} />
     <Route path="/not-found" component={NotFound} />
     <PrivateRoute path="/test" component={Test} />
+    <Redirect exact from="/" to="/login" />
     <Route>
       <Redirect to="/not-found" />
     </Route>
