@@ -22,9 +22,20 @@ const PrivateRoute: React.FC<RouteProps> = ({
     <ReactDOMRoute
       {...rest}
       render={({ location }) => {
-        api.post('/verify-token').catch(() => {
-          signOut();
-        });
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({}),
+        };
+        if (token) {
+          fetch(`${api}verify-token`, requestOptions).catch(() => {
+            signOut();
+          });
+        }
         return token ? (
           <Component />
         ) : (

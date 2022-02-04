@@ -4,14 +4,14 @@ import { ThemeProvider } from 'styled-components';
 import theme from './assets/styles/theme';
 import GlobalStyles from './assets/styles/global';
 import PagesRoutes from './routes';
-import AppProvider from './hooks';
+import { AuthProvider } from './hooks/auth';
 
 const App = (): React.ReactElement => (
   <Router>
     <ThemeProvider theme={theme}>
-      <AppProvider>
+      <AuthProvider>
         <PagesRoutes />
-      </AppProvider>
+      </AuthProvider>
       <GlobalStyles />
     </ThemeProvider>
   </Router>

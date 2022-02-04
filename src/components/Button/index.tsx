@@ -9,7 +9,7 @@ export interface ButtonProps {
   handleButton?: () => void;
 }
 
-const Button: React.ElementType<ButtonProps> = ({
+export const Button: React.ElementType<ButtonProps> = ({
   width,
   height,
   backgroundColor,
@@ -25,5 +25,3 @@ const Button: React.ElementType<ButtonProps> = ({
     {text}
   </ButtonInput>
 );
-
-export default Button;

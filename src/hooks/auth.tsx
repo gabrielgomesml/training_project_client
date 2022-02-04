@@ -1,3 +1,5 @@
+// Alternativa: Usar cookies de sessão
+
 import React, {
   createContext,
   useCallback,
@@ -12,8 +14,8 @@ interface User {
 }
 
 interface AuthState {
-  user: User;
-  token: string;
+  user?: User;
+  token?: string;
 }
 
 interface SignInCredentials {
@@ -22,7 +24,7 @@ interface SignInCredentials {
 }
 
 interface AuthContextProps {
-  user: User;
+  user?: User;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
 }
@@ -35,31 +37,35 @@ export const AuthProvider: React.FC = ({ children }) => {
     const token = localStorage.getItem('@training-project:token');
 
     if (user && token) {
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
       return { user: JSON.parse(user), token };
     }
 
-    return {} as AuthState;
+    return {};
   });
 
   const signIn = useCallback(async ({ email, password }) => {
-    const response = await api.post('/user-auth', { email, password });
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    };
+    const response = await fetch(`${api}user-auth`, requestOptions);
 
-    const { user, token } = response.data;
+    const signInData = await response.json();
+    const { user, token } = signInData;
 
     localStorage.setItem('@training-project:user', JSON.stringify(user));
     localStorage.setItem('@training-project:token', token);
-
-    api.defaults.headers.common.Authorization = `Bearer ${token}`;
   }, []);
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@training-project:user');
     localStorage.removeItem('@training-project:token');
 
-    delete api.defaults.headers.common.Authorization;
-
-    setData({} as AuthState);
+    setData({});
   }, []);
 
   const value = useMemo(

@@ -9,7 +9,7 @@ interface InputProps {
   height?: number;
 }
 
-const Input: React.ElementType<InputProps> = ({
+export const Input: React.ElementType<InputProps> = ({
   placeholderName,
   type,
   onChangeAction,
@@ -29,5 +29,3 @@ const Input: React.ElementType<InputProps> = ({
     />
   );
 };
-
-export default Input;

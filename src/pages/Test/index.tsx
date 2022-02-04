@@ -3,7 +3,7 @@ import { useAuth } from '../../hooks/auth';
 import theme from '../../assets/styles/theme';
 import { Button } from '../../components';
 
-const Test: React.FC = () => {
+export const Test: React.FC = () => {
   const { signOut } = useAuth();
   return (
     <>
@@ -18,5 +18,3 @@ const Test: React.FC = () => {
     </>
   );
 };
-
-export default Test;

@@ -1,3 +1,3 @@
-export { default as Login } from './Login';
-export { default as NotFound } from './NotFound';
-export { default as Test } from './Test';
+export { Login } from './Login';
+export { NotFound } from './NotFound';
+export { Test } from './Test';

@@ -10,7 +10,7 @@ import {
   LogoImage,
 } from './style';
 
-const Login: React.FC = () => {
+export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { signIn } = useAuth();
@@ -42,5 +42,3 @@ const Login: React.FC = () => {
     </MainContainer>
   );
 };
-
-export default Login;
