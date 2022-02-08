@@ -4,12 +4,14 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { ApplicationState } from '../../store';
 import { SignUpState } from '../../store/signUp/types';
 import * as SignUpActions from '../../store/signUp/actions';
+import Upload from '../../assets/icons/upload.png';
 import theme from '../../assets/styles/theme';
 import {
   MainContainer,
   ContentContainer,
   Title,
   InputsContainer,
+  UploadImage,
 } from './style';
 import { Input, Button } from '../../components';
 
@@ -27,6 +29,11 @@ const SignUp: React.FC<Props> = ({ signUp, toggleStep }) => (
   <MainContainer>
     <ContentContainer>
       <Title>{signUp.stepName}</Title>
+      {signUp.step === 3 && (
+        <label htmlFor="photo_input">
+          <UploadImage src={Upload} />
+        </label>
+      )}
       <InputsContainer>
         {signUp.step === 1 && (
           <>
@@ -67,6 +74,12 @@ const SignUp: React.FC<Props> = ({ signUp, toggleStep }) => (
           </>
         )}
       </InputsContainer>
+      <input
+        style={{ display: 'none' }}
+        id="photo_input"
+        type="file"
+        accept="image/jpeg, image/jpg, image/pjpeg, image/png"
+      />
       <Button
         handleButton={() => toggleStep()}
         width={314}

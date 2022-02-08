@@ -13,17 +13,31 @@ export const MainContainer = styled.section`
 export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  align-items: center;
 `;
 
 export const Title = styled.p`
   font-size: 20px;
   font-style: normal;
   font-weight: bold;
+  align-self: flex-start;
+  margin-bottom: 50px;
 `;
 
 export const InputsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-bottom: 50px;
+`;
+
+export const UploadImage = styled.img`
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  width: 120px;
+  margin-bottom: 5px;
+  cursor: pointer;
 `;
