@@ -6,7 +6,7 @@ import theme from './assets/styles/theme';
 import GlobalStyles from './assets/styles/global';
 import PagesRoutes from './routes';
 import { AuthProvider } from './hooks/auth';
-import store from './store';
+import { store } from './store';
 
 const App = (): React.ReactElement => (
   <Router>

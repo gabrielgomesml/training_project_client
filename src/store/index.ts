@@ -1,12 +1,4 @@
-import { combineReducers, createStore, Store } from 'redux';
-import { SignUpState } from './signUp/types';
+import { createStore } from 'redux';
+import reducers from './reducers';
 
-import signUp from './signUp';
-
-export interface ApplicationState {
-  signUp: SignUpState;
-}
-
-const store: Store<ApplicationState> = createStore(combineReducers({ signUp }));
-
-export default store;
+export const store = createStore(reducers, {});

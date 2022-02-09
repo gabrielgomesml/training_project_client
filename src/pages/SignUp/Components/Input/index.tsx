@@ -4,10 +4,11 @@ import { InputField } from './style';
 interface InputProps {
   placeholderName: string;
   type: string;
-  onChangeAction: (value: string) => void;
+  onChangeAction: (label: string, value: string) => void;
   value: string;
   width?: number;
   height?: number;
+  label: string;
 }
 
 export const Input: React.ElementType<InputProps> = ({
@@ -16,10 +17,11 @@ export const Input: React.ElementType<InputProps> = ({
   onChangeAction,
   width,
   height,
+  label,
   value,
 }: InputProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChangeAction(e.target.value);
+    onChangeAction(label, e.target.value);
   };
   return (
     <InputField

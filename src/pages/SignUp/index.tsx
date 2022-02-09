@@ -1,11 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
-import { ApplicationState } from '../../store';
-import { SignUpState } from '../../store/signUp/types';
-import * as SignUpActions from '../../store/signUp/actions';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Upload from '../../assets/icons/upload.png';
 import theme from '../../assets/styles/theme';
+import * as signUpActions from '../../store/actions-creators/index';
 import {
   MainContainer,
   ContentContainer,
@@ -13,89 +11,100 @@ import {
   InputsContainer,
   UploadImage,
 } from './style';
-import { Input, Button } from '../../components';
+import { Input } from './Components/Input';
+import { Button } from '../../components';
+import { State } from '../../store/reducers';
 
-interface StateProps {
-  signUp: SignUpState;
-}
+export const SignUp: React.FC = () => {
+  const dispatch = useDispatch();
 
-interface DispatchProps {
-  toggleStep(): void;
-}
+  const { toggleStep, updateValue } = bindActionCreators(
+    signUpActions,
+    dispatch,
+  );
 
-type Props = StateProps & DispatchProps;
+  const signUpInfos = useSelector((signUpState: State) => signUpState.signUp);
 
-const SignUp: React.FC<Props> = ({ signUp, toggleStep }) => (
-  <MainContainer>
-    <ContentContainer>
-      <Title>{signUp.stepName}</Title>
-      {signUp.step === 3 && (
-        <label htmlFor="photo_input">
-          <UploadImage src={Upload} />
-        </label>
-      )}
-      <InputsContainer>
-        {signUp.step === 1 && (
-          <>
-            <Input
-              placeholderName="Email"
-              type="text"
-              onChangeAction={() => console.log('Email')}
-            />
-            <Input
-              placeholderName="Senha"
-              type="password"
-              onChangeAction={() => console.log('senha')}
-            />
-            <Input
-              placeholderName="Repita sua senha"
-              type="password"
-              onChangeAction={() => console.log('repita sua senha')}
-            />
-          </>
+  useEffect(() => {
+    console.log(signUpInfos);
+  }, [signUpInfos]);
+
+  return (
+    <MainContainer>
+      <ContentContainer>
+        <Title>{signUpInfos.step}</Title>
+        <button onClick={() => toggleStep('back')}>voltar</button>
+        {signUpInfos.step === 'Foto de Perfil' && (
+          <label htmlFor="photo_input">
+            <UploadImage src={Upload} />
+          </label>
         )}
-        {signUp.step === 2 && (
-          <>
-            <Input
-              placeholderName="Nome"
-              type="text"
-              onChangeAction={() => console.log('nome')}
-            />
-            <Input
-              placeholderName="Sobrenome"
-              type="text"
-              onChangeAction={() => console.log('sobrenome')}
-            />
-            <Input
-              placeholderName="Telefone"
-              type="text"
-              onChangeAction={() => console.log('telefone')}
-            />
-          </>
-        )}
-      </InputsContainer>
-      <input
-        style={{ display: 'none' }}
-        id="photo_input"
-        type="file"
-        accept="image/jpeg, image/jpg, image/pjpeg, image/png"
-      />
-      <Button
-        handleButton={() => toggleStep()}
-        width={314}
-        height={34}
-        backgroundColor={theme.colors.mainRed}
-        text="Prosseguir"
-      />
-    </ContentContainer>
-  </MainContainer>
-);
-
-const mapStateToProps = (state: ApplicationState) => ({
-  signUp: state.signUp,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators(SignUpActions, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+        <InputsContainer>
+          {signUpInfos.step === 'Dados de Login' && (
+            <>
+              <Input
+                placeholderName="Email"
+                type="text"
+                onChangeAction={updateValue}
+                label="email"
+                value={signUpInfos.email}
+              />
+              <Input
+                placeholderName="Senha"
+                type="password"
+                onChangeAction={updateValue}
+                label="password"
+                value={signUpInfos.password}
+              />
+              <Input
+                placeholderName="Repita sua senha"
+                type="password"
+                onChangeAction={updateValue}
+                label="confirmPassword"
+                value={signUpInfos.confirmPassword}
+              />
+            </>
+          )}
+          {signUpInfos.step === 'Dados Pessoais' && (
+            <>
+              <Input
+                placeholderName="Nome"
+                type="text"
+                onChangeAction={updateValue}
+                label="name"
+                value={signUpInfos.name}
+              />
+              <Input
+                placeholderName="Sobrenome"
+                type="text"
+                onChangeAction={updateValue}
+                label="surname"
+                value={signUpInfos.surname}
+              />
+              <Input
+                placeholderName="Telefone"
+                type="text"
+                onChangeAction={updateValue}
+                label="phone"
+                value={signUpInfos.phone}
+              />
+            </>
+          )}
+        </InputsContainer>
+        <input
+          style={{ display: 'none' }}
+          id="photo_input"
+          type="file"
+          accept="image/jpeg, image/jpg, image/pjpeg, image/png"
+        />
+        <Button
+          handleButton={() => toggleStep('forward')}
+          width={314}
+          height={34}
+          backgroundColor={theme.colors.mainRed}
+          text="Prosseguir"
+        />
+      </ContentContainer>
+    </MainContainer>
+  );
+};

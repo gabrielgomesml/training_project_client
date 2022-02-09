@@ -24,11 +24,13 @@ export const Login: React.FC = () => {
             placeholderName="Email"
             type="text"
             onChangeAction={setEmail}
+            value={email}
           />
           <Input
             placeholderName="Senha"
             type="password"
             onChangeAction={setPassword}
+            value={password}
           />
         </InputsContainer>
         <Button
