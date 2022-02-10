@@ -38,7 +38,6 @@ export const checkValues = (type: string, value: string) => {
     }
     return '';
   }
-
   const regExpType = regExpTypes.find((item) => item.type === type);
   const match = regExpType?.regExp.test(value);
 
