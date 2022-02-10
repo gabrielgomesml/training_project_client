@@ -1,4 +1,4 @@
-import { SignUpTypes, Action } from '../types/signUpTypes';
+import { SignUpTypes, Action, StateType } from '../types/signUpTypes';
 
 const INITIAL_STATE = {
   step: 'Dados de Login',
@@ -14,7 +14,7 @@ const INITIAL_STATE = {
   loading: false,
 };
 
-const reducer = (state = INITIAL_STATE, action: Action) => {
+const reducer = (state: StateType = INITIAL_STATE, action: Action) => {
   switch (action.type) {
     case SignUpTypes.TOGGLE_STEP:
       if (action.payload === 'forward') {

@@ -16,12 +16,29 @@ export const ContentContainer = styled.div`
   align-items: center;
 `;
 
+export const HeadContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
+
 export const Title = styled.p`
   font-size: 20px;
   font-style: normal;
   font-weight: bold;
   align-self: flex-start;
   margin-bottom: 50px;
+`;
+
+export const BackButton = styled.button`
+  background-color: ${({ theme }) => theme.colors.mainWhite};
+  border: none;
+  border-radius: 5px;
+  width: 70px;
+  height: 30px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: bold;
 `;
 
 export const InputsContainer = styled.div`
@@ -38,6 +55,13 @@ export const UploadImage = styled.img`
   align-items: center;
   background-size: cover;
   width: 120px;
+  height: 120px;
   margin-bottom: 5px;
   cursor: pointer;
+`;
+
+export const ErrorText = styled.p`
+  font-size: 10px;
+  font-style: normal;
+  font-weight: bold;
 `;

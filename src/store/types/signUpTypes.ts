@@ -1,3 +1,5 @@
+import { ThunkAction } from 'redux-thunk';
+
 /**
  * Action types
  */
@@ -19,12 +21,13 @@ interface UpdateAction {
   type: SignUpTypes.UPDATE_VALUE;
   payload: {
     label: string;
-    value: string;
+    value: string | File;
   };
 }
 
 interface RequestAction {
   type: SignUpTypes.LOAD_REQUEST;
+  payload: any; // Mudar para a tipagem de User depois
 }
 
 interface SucessAction {
@@ -41,3 +44,25 @@ export type Action =
   | RequestAction
   | SucessAction
   | FailureAction;
+
+export type postActionCreator = (
+  data: any,
+) => ThunkAction<void, any, {}, RequestAction>;
+
+/**
+ * State type
+ */
+
+export interface StateType {
+  step: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  name: string;
+  surname: string;
+  photo_address: string | File;
+  phone: string;
+  role: number;
+  active: boolean;
+  loading: boolean;
+}
