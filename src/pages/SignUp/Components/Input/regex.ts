@@ -1,5 +1,5 @@
 export const regExpTypes = [
-  { type: 'alpha', regExp: /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+/ },
+  { type: 'text', regExp: /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+/ },
   { type: 'numeric', regExp: /^[0-9]*$/ },
   { type: 'alphanumeric', regExp: /^[a-z A-Z à-ú À-Ú 0-9]*$/ },
   {
@@ -38,6 +38,7 @@ export const checkValues = (type: string, value: string) => {
     }
     return '';
   }
+
   const regExpType = regExpTypes.find((item) => item.type === type);
   const match = regExpType?.regExp.test(value);
 

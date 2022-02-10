@@ -14,6 +14,8 @@ import {
   InputsContainer,
   UploadImage,
   ErrorText,
+  ReviewContainer,
+  InfoContainer,
 } from './style';
 import { Input } from './Components/Input';
 import { Button } from '../../components';
@@ -22,7 +24,6 @@ import { State } from '../../store/reducers';
 export const SignUp: React.FC = () => {
   const dispatch = useDispatch();
   const [photoPreview, setPhotoPreview] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
 
   const { toggleStep, updateValue, loadRequest } = bindActionCreators(
     signUpActions,
@@ -36,12 +37,8 @@ export const SignUp: React.FC = () => {
       const reader = new FileReader();
       const target = e.target.files[0];
 
-      if (e.target.files[0] && e.target.files[0].size <= 5000000) {
+      if (e.target.files[0]) {
         reader.readAsDataURL(e.target.files[0]);
-      } else {
-        setErrorMsg(
-          'Este aquivo que você tentou selecionar é muito grande. Escolha arquivos de até 5mb.',
-        );
       }
 
       reader.onloadend = () => {
@@ -68,7 +65,8 @@ export const SignUp: React.FC = () => {
             <BackButton onClick={() => toggleStep('back')}>Voltar</BackButton>
           )}
         </HeadContainer>
-        {signUpInfos.step === 'Foto de Perfil' && (
+        {(signUpInfos.step === 'Foto de Perfil' ||
+          signUpInfos.step === 'Resumo') && (
           // eslint-disable-next-line jsx-a11y/label-has-associated-control
           <label htmlFor="photo_input">
             <UploadImage src={photoPreview || Upload} />
@@ -126,6 +124,27 @@ export const SignUp: React.FC = () => {
             </>
           )}
         </InputsContainer>
+        {signUpInfos.step === 'Resumo' && (
+          <ReviewContainer>
+            <InfoContainer>
+              <p>Email:</p>
+              <p>{signUpInfos.email}</p>
+            </InfoContainer>
+            <InfoContainer>
+              <p>Nome:</p>
+              <p>{signUpInfos.name}</p>
+            </InfoContainer>
+            <InfoContainer>
+              <p>Sobrenome:</p>
+              <p>{signUpInfos.surname}</p>
+            </InfoContainer>
+            <InfoContainer>
+              <p>Telefone:</p>
+              <p>{signUpInfos.phone ? signUpInfos.phone : '-'}</p>
+            </InfoContainer>
+          </ReviewContainer>
+        )}
+        <ErrorText>{signUpInfos.error}</ErrorText>
         <input
           style={{ display: 'none' }}
           id="photo_input"
@@ -134,13 +153,25 @@ export const SignUp: React.FC = () => {
           onChange={handleImage}
         />
         <Button
-          handleButton={() => toggleStep('forward')}
+          handleButton={() =>
+            signUpInfos.step !== 'Resumo'
+              ? toggleStep('forward')
+              : loadRequest({
+                  email: signUpInfos.email,
+                  password: signUpInfos.password,
+                  name: signUpInfos.name,
+                  surname: signUpInfos.surname,
+                  photo_address: signUpInfos.photo_address || null,
+                  phone: signUpInfos.phone || null,
+                  role: signUpInfos.role,
+                  active: signUpInfos.active,
+                })
+          }
           width={314}
           height={34}
           backgroundColor={theme.colors.mainRed}
-          text="Prosseguir"
+          text={signUpInfos.step !== 'Resumo' ? 'Prosseguir' : 'Cadastre-se'}
         />
-        <ErrorText>{errorMsg}</ErrorText>
       </ContentContainer>
     </MainContainer>
   );

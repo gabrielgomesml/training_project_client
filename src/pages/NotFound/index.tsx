@@ -6,6 +6,6 @@ export const NotFound: React.FC = () => (
   <MainContainer>
     <Image src={CornImage} />
     <Title>404</Title>
-    <Subtitle>The corn hasn't popped yet. Page not found</Subtitle>
+    <Subtitle>The corn hasn&apos;t popped yet. Page not found</Subtitle>
   </MainContainer>
 );

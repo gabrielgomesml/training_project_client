@@ -25,12 +25,16 @@ export const Login: React.FC = () => {
             type="text"
             onChangeAction={setEmail}
             value={email}
+            width={314}
+            height={34}
           />
           <Input
             placeholderName="Senha"
             type="password"
             onChangeAction={setPassword}
             value={password}
+            width={314}
+            height={34}
           />
         </InputsContainer>
         <Button

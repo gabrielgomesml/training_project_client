@@ -65,4 +65,5 @@ export interface StateType {
   role: number;
   active: boolean;
   loading: boolean;
+  error: string;
 }

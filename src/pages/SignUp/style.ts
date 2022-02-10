@@ -39,6 +39,7 @@ export const BackButton = styled.button`
   font-size: 14px;
   font-style: normal;
   font-weight: bold;
+  cursor: pointer;
 `;
 
 export const InputsContainer = styled.div`
@@ -64,4 +65,17 @@ export const ErrorText = styled.p`
   font-size: 10px;
   font-style: normal;
   font-weight: bold;
+`;
+
+export const ReviewContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 50px;
+`;
+
+export const InfoContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;

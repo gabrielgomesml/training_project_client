@@ -6,8 +6,8 @@ interface InputProps {
   type: string;
   onChangeAction: (value: string) => void;
   value: string;
-  width?: number;
-  height?: number;
+  width: number;
+  height: number;
 }
 
 export const Input: React.ElementType<InputProps> = ({
