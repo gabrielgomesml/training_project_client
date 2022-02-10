@@ -39,4 +39,7 @@ export const loadRequest: postActionCreator =
     } catch (error) {
       console.log('ERROR: ', error); // Still needs to be implemented the failure action cal
     }
-  };
+  } catch (error) {
+    console.log(error);
+  }
+};

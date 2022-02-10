@@ -82,3 +82,16 @@ export const InfoContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+export const ReviewContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 50px;
+`;
+
+export const InfoContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;

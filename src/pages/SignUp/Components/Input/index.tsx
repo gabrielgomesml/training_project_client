@@ -32,10 +32,10 @@ export const Input: React.ElementType<InputProps> = ({
     };
 
     const match = checkValues(type, e.target.value);
-
     switch (type) {
       case 'text':
         if (!match) {
+          console.log('entrouaq');
           setErrorText('O campo deve conter apenas letras');
         } else {
           setErrorText('');
