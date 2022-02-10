@@ -7,8 +7,6 @@ interface InputProps {
   type: string;
   onChangeAction: (label: string, value: string) => void;
   value: string;
-  width: number;
-  height: number;
   label: string;
 }
 
@@ -16,19 +14,15 @@ export const Input: React.ElementType<InputProps> = ({
   placeholderName,
   type,
   onChangeAction,
-  width,
-  height,
   label,
   value,
 }: InputProps) => {
   const [errorText, setErrorText] = useState('');
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const match = checkValues(type, e.target.value);
-    console.log('mathc', match);
     switch (type) {
       case 'text':
         if (!match) {
-          console.log('entrouaq');
           setErrorText('O campo deve conter apenas letras');
         } else {
           setErrorText('');
@@ -84,8 +78,6 @@ export const Input: React.ElementType<InputProps> = ({
         placeholder={placeholderName}
         type={type}
         onChange={handleChange}
-        $width={width}
-        $height={height}
         value={value}
       />
       <p>{errorText}</p>
