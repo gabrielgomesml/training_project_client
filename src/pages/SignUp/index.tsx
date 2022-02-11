@@ -154,11 +154,19 @@ export const SignUp: React.FC = () => {
           accept="image/jpeg, image/jpg, image/pjpeg, image/png"
           onChange={handleImage}
         />
-        <Button
-          handleButton={() =>
-            signUpInfos.step !== 'Resumo'
-              ? toggleStep('forward')
-              : loadRequest({
+        {signUpInfos.step !== 'Resumo' ? (
+          <Button
+            handleButton={() => toggleStep('forward')}
+            width={314}
+            height={34}
+            backgroundColor={theme.colors.mainRed}
+            text="Prosseguir"
+          />
+        ) : (
+          <Link to="/login">
+            <Button
+              handleButton={() =>
+                loadRequest({
                   email: signUpInfos.email,
                   password: signUpInfos.password,
                   name: signUpInfos.name,
@@ -168,12 +176,14 @@ export const SignUp: React.FC = () => {
                   role: signUpInfos.role,
                   active: signUpInfos.active,
                 })
-          }
-          width={314}
-          height={34}
-          backgroundColor={theme.colors.mainRed}
-          text={signUpInfos.step !== 'Resumo' ? 'Prosseguir' : 'Cadastre-se'}
-        />
+              }
+              width={314}
+              height={34}
+              backgroundColor={theme.colors.mainRed}
+              text="Cadastre-se"
+            />
+          </Link>
+        )}
       </ContentContainer>
     </MainContainer>
   );

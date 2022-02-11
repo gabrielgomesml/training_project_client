@@ -14,6 +14,7 @@ const INITIAL_STATE = {
   active: false,
   loading: false,
   error: '',
+  success: false,
 };
 
 const reducer = (state: StateType = INITIAL_STATE, action: Action) => {
@@ -67,9 +68,9 @@ const reducer = (state: StateType = INITIAL_STATE, action: Action) => {
     case SignUpTypes.LOAD_REQUEST:
       return { ...state, loading: true };
     case SignUpTypes.LOAD_SUCCESS:
-      return state;
+      return { ...state, loading: false, success: true };
     case SignUpTypes.LOAD_FAILURE:
-      return state;
+      return { ...state, loading: false, success: false };
     default:
       return state;
   }

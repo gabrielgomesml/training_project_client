@@ -47,7 +47,7 @@ export type Action =
 
 export type postActionCreator = (
   data: any,
-) => ThunkAction<void, any, {}, RequestAction>;
+) => ThunkAction<void, any, unknown, RequestAction>;
 
 /**
  * State type
@@ -66,4 +66,16 @@ export interface StateType {
   active: boolean;
   loading: boolean;
   error: string;
+  success: boolean;
+}
+
+export interface RequestType {
+  email: string;
+  password: string;
+  name: string;
+  surname: string;
+  photo_address?: string;
+  phone?: string;
+  role: number;
+  active: boolean;
 }
