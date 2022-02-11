@@ -32,6 +32,7 @@ export const Input: React.ElementType<InputProps> = ({
     };
 
     const match = checkValues(type, e.target.value);
+
     switch (type) {
       case 'text':
         if (!match) {
