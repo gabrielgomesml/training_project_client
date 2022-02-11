@@ -19,6 +19,15 @@ export const Input: React.ElementType<InputProps> = ({
 }: InputProps) => {
   const [errorText, setErrorText] = useState('');
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const phoneMask = (inputValue: string): string => {
+      let newValue = inputValue;
+      newValue = inputValue
+        .replace(/\D/g, '')
+        .replace(/^(\d{2})(\d)/g, '($1) $2')
+        .replace(/(\d)(\d{4})$/, '$1-$2');
+      return String(newValue);
+    };
+
     const match = checkValues(type, e.target.value);
     switch (type) {
       case 'text':
@@ -70,7 +79,11 @@ export const Input: React.ElementType<InputProps> = ({
       default:
         break;
     }
-    onChangeAction(label, e.target.value);
+    if (type === 'tel') {
+      onChangeAction(label, phoneMask(e.target.value));
+    } else {
+      onChangeAction(label, e.target.value);
+    }
   };
   return (
     <>
