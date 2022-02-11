@@ -77,6 +77,7 @@ export const SignUp: React.FC = () => {
                 onChangeAction={updateValue}
                 label="email"
                 value={signUpInfos.email}
+                showError={!!signUpInfos.error}
               />
               <Input
                 placeholderName="Senha*"
@@ -84,6 +85,7 @@ export const SignUp: React.FC = () => {
                 onChangeAction={updateValue}
                 label="password"
                 value={signUpInfos.password}
+                showError={!!signUpInfos.error}
               />
               <Input
                 placeholderName="Repita sua senha*"
@@ -91,6 +93,7 @@ export const SignUp: React.FC = () => {
                 onChangeAction={updateValue}
                 label="confirmPassword"
                 value={signUpInfos.confirmPassword}
+                showError={!!signUpInfos.error}
               />
             </>
           )}
@@ -102,6 +105,7 @@ export const SignUp: React.FC = () => {
                 onChangeAction={updateValue}
                 label="name"
                 value={signUpInfos.name}
+                showError={!!signUpInfos.error}
               />
               <Input
                 placeholderName="Sobrenome*"
@@ -109,6 +113,7 @@ export const SignUp: React.FC = () => {
                 onChangeAction={updateValue}
                 label="surname"
                 value={signUpInfos.surname}
+                showError={!!signUpInfos.error}
               />
               <Input
                 placeholderName="Telefone"
@@ -116,6 +121,7 @@ export const SignUp: React.FC = () => {
                 onChangeAction={updateValue}
                 label="phone"
                 value={signUpInfos.phone}
+                showError={!!signUpInfos.error}
               />
             </>
           )}

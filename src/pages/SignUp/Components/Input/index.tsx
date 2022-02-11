@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { InputField } from './style';
 import { checkValues } from './regex';
+import theme from '../../../../assets/styles/theme';
 
 interface InputProps {
   placeholderName: string;
@@ -8,6 +9,7 @@ interface InputProps {
   onChangeAction: (label: string, value: string) => void;
   value: string;
   label: string;
+  showError: boolean;
 }
 
 export const Input: React.ElementType<InputProps> = ({
@@ -16,6 +18,7 @@ export const Input: React.ElementType<InputProps> = ({
   onChangeAction,
   label,
   value,
+  showError,
 }: InputProps) => {
   const [errorText, setErrorText] = useState('');
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +32,7 @@ export const Input: React.ElementType<InputProps> = ({
     };
 
     const match = checkValues(type, e.target.value);
+
     switch (type) {
       case 'text':
         if (!match) {
@@ -88,6 +92,14 @@ export const Input: React.ElementType<InputProps> = ({
   return (
     <>
       <InputField
+        style={{
+          border: `solid ${
+            (errorText !== '' || (value === '' && type !== 'tel')) && showError
+              ? theme.colors.mainRed
+              : theme.colors.mainBlack
+          } 1px`,
+          borderRadius: '3px',
+        }}
         placeholder={placeholderName}
         type={type}
         onChange={handleChange}

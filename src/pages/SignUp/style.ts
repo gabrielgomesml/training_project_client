@@ -14,6 +14,7 @@ export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 314px;
 `;
 
 export const HeadContainer = styled.div`
@@ -46,7 +47,7 @@ export const InputsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 `;
 
 export const UploadImage = styled.img`
@@ -65,6 +66,8 @@ export const ErrorText = styled.p`
   font-size: 10px;
   font-style: normal;
   font-weight: bold;
+  margin-bottom: 10px;
+  color: ${({ theme }) => theme.colors.mainBlack};
 `;
 
 export const ReviewContainer = styled.div`
