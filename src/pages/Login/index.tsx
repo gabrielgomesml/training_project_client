@@ -26,16 +26,16 @@ export const Login: React.FC = () => {
             type="text"
             onChangeAction={setEmail}
             value={email}
-            width={314}
-            height={34}
+            width="314px"
+            height="34px"
           />
           <Input
             placeholderName="Senha"
             type="password"
             onChangeAction={setPassword}
             value={password}
-            width={314}
-            height={34}
+            width="314px"
+            height="34px"
           />
         </InputsContainer>
         <Link to="/cadastro">
