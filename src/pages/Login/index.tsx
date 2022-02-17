@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import theme from '../../assets/styles/theme';
 import { Button, Input } from '../../components';
 import { useAuth } from '../../hooks/auth';
@@ -24,13 +25,22 @@ export const Login: React.FC = () => {
             placeholderName="Email"
             type="text"
             onChangeAction={setEmail}
+            value={email}
+            width={314}
+            height={34}
           />
           <Input
             placeholderName="Senha"
             type="password"
             onChangeAction={setPassword}
+            value={password}
+            width={314}
+            height={34}
           />
         </InputsContainer>
+        <Link to="/cadastro">
+          <p>Cadastre-se</p>
+        </Link>
         <Button
           handleButton={() => signIn({ email, password })}
           width={250}

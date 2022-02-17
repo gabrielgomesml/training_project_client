@@ -26,11 +26,11 @@ interface SignInCredentials {
 
 interface AuthContextProps {
   user?: User;
-  signIn?(credentials: SignInCredentials): Promise<void>;
-  signOut?(): void;
+  signIn(credentials: SignInCredentials): Promise<void>;
+  signOut(): void;
 }
 
-const AuthContext = createContext<AuthContextProps>({});
+const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {

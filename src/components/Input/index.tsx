@@ -5,8 +5,9 @@ interface InputProps {
   placeholderName: string;
   type: string;
   onChangeAction: (value: string) => void;
-  width?: number;
-  height?: number;
+  value: string;
+  width: number;
+  height: number;
 }
 
 export const Input: React.ElementType<InputProps> = ({
@@ -15,6 +16,7 @@ export const Input: React.ElementType<InputProps> = ({
   onChangeAction,
   width,
   height,
+  value,
 }: InputProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChangeAction(e.target.value);
@@ -26,6 +28,7 @@ export const Input: React.ElementType<InputProps> = ({
       onChange={handleChange}
       $width={width}
       $height={height}
+      value={value}
     />
   );
 };
