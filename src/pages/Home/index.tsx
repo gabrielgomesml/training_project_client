@@ -1,13 +1,50 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { Modal, Input } from '../../components';
 import { FilmLine } from './components/FilmLine';
 import { FilmBox } from './components/FilmBox';
 import { MainContainer, ContentContainer } from './style';
 import Logo from '../../assets/icons/cinema.png';
+import api from '../../services/api';
+import { useAuth } from '../../hooks/auth';
+import { MoviesData } from './types';
+import { especificMovieMock, moviesSuggestionsMock, genresMock } from './mocks';
 
 export const Home: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [search, setSearch] = useState('');
+  const [movies, setMovies] = useState<MoviesData[]>([]);
+  const [specificMovie, setSpecificMovie] =
+    useState<MoviesData>(especificMovieMock);
+  const { ...authInfo } = useAuth();
+
+  const loadMovies = useCallback(async () => {
+    const response = await fetch(
+      `${api}movies-users-user-id/${authInfo.user?.id}`,
+    );
+    const data = await response.json();
+    setMovies(
+      data.map((movieUser: { movie: MoviesData }) => ({
+        id: movieUser.movie.id,
+        title: movieUser.movie.title,
+        poster: movieUser.movie.poster,
+        release_year: movieUser.movie.release_year,
+        synopsis: movieUser.movie.synopsis,
+        created_at: movieUser.movie.createdAt,
+      })),
+    );
+  }, [authInfo.user?.id]);
+
+  const loadSpecificMovie = useCallback(async (movieId: string) => {
+    const response = await fetch(`${api}movies/${movieId}`);
+    const data = await response.json();
+    setSpecificMovie(data);
+    setShowModal(true);
+  }, []);
+
+  useEffect(() => {
+    loadMovies();
+  }, [loadMovies]);
+
   return (
     <MainContainer>
       <ContentContainer>
@@ -19,30 +56,21 @@ export const Home: React.FC = () => {
           height="34px"
           placeholderName="Pesquise um filme..."
         />
-        <FilmLine
-          title="Filme A com B"
-          text="A história desse filme fala um pouco sobre duas letras, A e B que quando
-        estão juntas blá blá dasda dasdaded de ed e dad asd edadasdadasdad dasda
-        dededadad adicionando mais palavras aqui p testar como que fica lá na
-        pagina"
-          image={Logo}
-          handleClick={() => setShowModal(true)}
-        />
+        {movies.map(({ id, title, poster, synopsis }) => (
+          <FilmLine
+            title={title}
+            text={synopsis || 'Sem sinopse fornecida'}
+            image={poster || Logo}
+            handleClick={() => loadSpecificMovie(id)}
+          />
+        ))}
         <Modal showModal={showModal} setShowModal={setShowModal}>
           <FilmBox
-            title="Filme A com B"
-            text="A história desse filme fala um pouco sobre duas letras, A e B que quando
-        estão juntas blá blá dasda dasdaded de ed e dad asd edadasdadasdad dasda
-        dededadad adicionando mais palavras aqui p testar como que fica lá na
-        pagina"
-            genres={['Ação', 'Romance', 'Suspense', 'Terror']}
-            image={Logo}
-            suggestions={[
-              { id: '1', title: 'Filme 1' },
-              { id: '2', title: 'Filme 2' },
-              { id: '3', title: 'Filme 3' },
-              { id: '4', title: 'Filme 4' },
-            ]}
+            title={specificMovie.title}
+            text={specificMovie.synopsis || 'Sem sinopse fornecida'}
+            genres={genresMock}
+            image={specificMovie.poster || Logo}
+            suggestions={moviesSuggestionsMock}
           />
         </Modal>
       </ContentContainer>
