@@ -12,9 +12,10 @@ const INITIAL_STATE = {
   phone: '',
   role: 0,
   active: false,
+  errorMessage: '',
   loading: false,
-  error: '',
   success: false,
+  error: false,
 };
 
 const reducer = (state: StateType = INITIAL_STATE, action: Action) => {
@@ -27,9 +28,9 @@ const reducer = (state: StateType = INITIAL_STATE, action: Action) => {
           !checkValues('password', state.password)
         ) {
           if (state.password === state.confirmPassword) {
-            return { ...state, step: 'Dados Pessoais', error: '' };
+            return { ...state, step: 'Dados Pessoais', errorMessage: '' };
           }
-          return { ...state, error: 'As senhas não coincidem' };
+          return { ...state, errorMessage: 'As senhas não coincidem' };
         }
         if (state.step === 'Dados Pessoais') {
           if (state.step === 'Dados Pessoais' && state.phone) {
@@ -38,13 +39,13 @@ const reducer = (state: StateType = INITIAL_STATE, action: Action) => {
               checkValues('text', state.surname) &&
               checkValues('tel', state.phone)
             ) {
-              return { ...state, step: 'Foto de Perfil', error: '' };
+              return { ...state, step: 'Foto de Perfil', errorMessage: '' };
             }
           } else if (
             checkValues('text', state.name) &&
             checkValues('text', state.surname)
           ) {
-            return { ...state, step: 'Foto de Perfil', error: '' };
+            return { ...state, step: 'Foto de Perfil', errorMessage: '' };
           }
         }
         if (state.step === 'Foto de Perfil') {
@@ -61,16 +62,16 @@ const reducer = (state: StateType = INITIAL_STATE, action: Action) => {
           return { ...state, step: 'Dados de Login' };
         }
       }
-      return { ...state, error: 'Campos inválidos' };
+      return { ...state, errorMessage: 'Campos inválidos' };
     case SignUpTypes.UPDATE_VALUE:
       const { label, value } = action.payload;
       return { ...state, [label]: value };
     case SignUpTypes.LOAD_REQUEST:
       return { ...state, loading: true };
     case SignUpTypes.LOAD_SUCCESS:
-      return { ...state, loading: false, success: true };
+      return { ...state, loading: false, success: true, error: false };
     case SignUpTypes.LOAD_FAILURE:
-      return { ...state, loading: false, success: false };
+      return { ...state, loading: false, success: false, error: true };
     default:
       return state;
   }

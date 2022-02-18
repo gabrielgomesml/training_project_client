@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import theme from '../../assets/styles/theme';
 import { Button, Input } from '../../components';
 import { useAuth } from '../../hooks/auth';
 import Logo from '../../assets/icons/cinema.png';
+import { useDebounceCallback } from '../../hooks/debounce';
 import {
   MainContainer,
   ContentContainer,
@@ -12,13 +13,22 @@ import {
 } from './style';
 
 export const Login: React.FC = () => {
+  // Hook sempre na raiz
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { signIn } = useAuth();
-
-  useEffect(() => {
+  const consoleEmail = useCallback(() => {
     console.log(email);
   }, [email]);
+  const debounce = useDebounceCallback(consoleEmail, 3000);
+
+  const handleChange = (value: string) => {
+    setEmail(value);
+  };
+
+  useEffect(() => {
+    debounce();
+  }, [email, debounce]);
 
   return (
     <MainContainer>
@@ -28,7 +38,7 @@ export const Login: React.FC = () => {
           <Input
             placeholderName="Email"
             type="text"
-            onChangeAction={setEmail}
+            onChangeAction={handleChange}
             value={email}
             width="314px"
             height="34px"

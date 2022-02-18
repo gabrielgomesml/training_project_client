@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { InputField } from './style';
 
 interface InputProps {
@@ -18,15 +18,15 @@ export const Input: React.ElementType<InputProps> = ({
   height,
   value,
 }: InputProps) => {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChangeAction(e.target.value);
+  const handleChange = (valueData: string) => {
+    onChangeAction(valueData);
   };
 
   return (
     <InputField
       placeholder={placeholderName}
       type={type}
-      onChange={handleChange}
+      onChange={({ target: { value: valueData } }) => handleChange(valueData)}
       $width={width}
       $height={height}
       value={value}

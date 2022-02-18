@@ -45,9 +45,9 @@ export type Action =
   | SucessAction
   | FailureAction;
 
-export type postActionCreator = (
+export type PostActionCreator = (
   data: any,
-) => ThunkAction<void, any, unknown, RequestAction>;
+) => ThunkAction<void, any, unknown, Action>;
 
 /**
  * State type
@@ -64,9 +64,10 @@ export interface StateType {
   phone: string;
   role: number;
   active: boolean;
+  errorMessage: string;
   loading: boolean;
-  error: string;
   success: boolean;
+  error: boolean;
 }
 
 export interface RequestType {

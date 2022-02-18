@@ -17,5 +17,5 @@ export const ContentContainer = styled.div`
   align-items: center;
   width: 760px;
   min-height: 100vh;
-  padding: 30px;
+  padding: 30px 30px 0px 30px;
 `;

@@ -23,7 +23,7 @@ export const Home: React.FC = () => {
     );
     const data = await response.json();
     setMovies(
-      data.map((movieUser: { movie: MoviesData }) => ({
+      data?.map((movieUser: { movie: MoviesData }) => ({
         id: movieUser.movie.id,
         title: movieUser.movie.title,
         poster: movieUser.movie.poster,
@@ -67,6 +67,7 @@ export const Home: React.FC = () => {
         <Modal showModal={showModal} setShowModal={setShowModal}>
           <FilmBox
             title={specificMovie.title}
+            release_year={specificMovie.release_year}
             text={specificMovie.synopsis || 'Sem sinopse fornecida'}
             genres={genresMock}
             image={specificMovie.poster || Logo}

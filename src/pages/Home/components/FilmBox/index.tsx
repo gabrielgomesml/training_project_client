@@ -21,6 +21,7 @@ type Suggestion = {
 
 interface FilmBoxProps {
   title: string;
+  release_year: string;
   text: string;
   genres: string[];
   image: any;
@@ -29,6 +30,7 @@ interface FilmBoxProps {
 
 export const FilmBox: React.ElementType<FilmBoxProps> = ({
   title,
+  release_year,
   text,
   genres,
   image,
@@ -48,7 +50,7 @@ export const FilmBox: React.ElementType<FilmBoxProps> = ({
         <Image src={image} />
         <TextContainer>
           <h1>{title}</h1>
-          <p>2019</p>
+          <p>{release_year}</p>
           <TagsContainer>
             {genres.map((genre) => (
               <Tag>
