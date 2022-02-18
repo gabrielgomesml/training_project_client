@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import theme from '../../assets/styles/theme';
 import { Button, Input } from '../../components';
@@ -15,6 +15,10 @@ export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { signIn } = useAuth();
+
+  useEffect(() => {
+    console.log(email);
+  }, [email]);
 
   return (
     <MainContainer>

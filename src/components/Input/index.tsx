@@ -1,5 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import { InputField } from './style';
+import { useDebounceCallback } from '../../hooks/debounce';
 
 interface InputProps {
   placeholderName: string;
@@ -18,9 +19,13 @@ export const Input: React.ElementType<InputProps> = ({
   height,
   value,
 }: InputProps) => {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChangeAction(e.target.value);
-  };
+  const handleChange = useDebounceCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      console.log('Entrou aqui!');
+      onChangeAction(e.target.value);
+    },
+    500,
+  );
   return (
     <InputField
       placeholder={placeholderName}
