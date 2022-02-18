@@ -19,7 +19,7 @@ export const Home: React.FC = () => {
 
   const loadMovies = useCallback(async () => {
     const response = await fetch(
-      `${api}movies-users-user-id/${authInfo.user?.id}`,
+      `${api}movies-users-user-id/${authInfo.user?.id}?text=${search}`,
     );
     const data = await response.json();
     setMovies(
@@ -32,7 +32,7 @@ export const Home: React.FC = () => {
         created_at: movieUser.movie.createdAt,
       })),
     );
-  }, [authInfo.user?.id]);
+  }, [authInfo.user?.id, search]);
 
   const loadSpecificMovie = useCallback(async (movieId: string) => {
     const response = await fetch(`${api}movies/${movieId}`);
@@ -43,7 +43,7 @@ export const Home: React.FC = () => {
 
   useEffect(() => {
     loadMovies();
-  }, [loadMovies]);
+  }, [loadMovies, search]);
 
   return (
     <MainContainer>
