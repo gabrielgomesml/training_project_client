@@ -8,6 +8,7 @@ import React, {
   useMemo,
 } from 'react';
 import Cookies from 'js-cookie';
+import { useHistory } from 'react-router-dom';
 import api from '../services/api';
 
 interface User {
@@ -33,6 +34,7 @@ interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
 export const AuthProvider: React.FC = ({ children }) => {
+  const history = useHistory();
   const [data, setData] = useState<AuthState>(() => {
     const user = Cookies.get('@training-project:user');
     const token = Cookies.get('@training-project:token');
@@ -44,26 +46,32 @@ export const AuthProvider: React.FC = ({ children }) => {
     return {};
   });
 
-  const signIn = useCallback(async ({ email, password }) => {
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    };
-    const response = await fetch(`${api}user-auth`, {
-      ...requestOptions,
-      credentials: 'include',
-    });
+  const signIn = useCallback(
+    async ({ email, password }) => {
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      };
+      const response = await fetch(`${api}user-auth`, {
+        ...requestOptions,
+        credentials: 'include',
+      });
 
-    const signInData = await response.json();
-    const { user, token } = signInData;
+      if (response.status === 200) {
+        const signInData = await response.json();
+        const { user, token } = signInData;
 
-    Cookies.set('@training-project:user', JSON.stringify(user));
-    Cookies.set('@training-project:token', JSON.stringify(token));
-  }, []);
+        Cookies.set('@training-project:user', JSON.stringify(user));
+        Cookies.set('@training-project:token', JSON.stringify(token));
+        history.push('/pagina-inicial');
+      }
+    },
+    [history],
+  );
 
   const signOut = useCallback(() => {
     Cookies.remove('@training-project:token');

@@ -20,7 +20,10 @@ const PrivateRoute: React.FC<RouteProps> = ({
   ...rest
 }) => {
   const token = Cookies.get('@training-project:token');
-  const user = JSON.parse(Cookies.get('@training-project:user'));
+  let user = Cookies.get('@training-project:user');
+  if (user) {
+    user = JSON.parse(user);
+  }
   const { signOut } = useAuth();
 
   return (
