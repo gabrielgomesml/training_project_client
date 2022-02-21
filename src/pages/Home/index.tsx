@@ -1,4 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
+import { TailSpin } from 'react-loader-spinner';
 import { Modal, Input } from '../../components';
 import { FilmLine } from './components/FilmLine';
 import { FilmBox } from './components/FilmBox';
@@ -8,10 +9,12 @@ import api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
 import { MoviesData } from './types';
 import { especificMovieMock, moviesSuggestionsMock, genresMock } from './mocks';
+import { useDebounceCallback } from '../../hooks/debounce';
 
 export const Home: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState<MoviesData[]>([]);
   const [specificMovie, setSpecificMovie] =
     useState<MoviesData>(especificMovieMock);
@@ -32,7 +35,10 @@ export const Home: React.FC = () => {
         created_at: movieUser.movie.createdAt,
       })),
     );
+    setLoading(false);
   }, [authInfo.user?.id, search]);
+
+  const debounceSearch = useDebounceCallback(loadMovies, 500);
 
   const loadSpecificMovie = useCallback(async (movieId: string) => {
     const response = await fetch(`${api}movies/${movieId}`);
@@ -42,8 +48,8 @@ export const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    loadMovies();
-  }, [loadMovies, search]);
+    debounceSearch();
+  }, [debounceSearch, search]);
 
   return (
     <MainContainer>
@@ -56,6 +62,7 @@ export const Home: React.FC = () => {
           height="34px"
           placeholderName="Pesquise um filme..."
         />
+        {loading && <TailSpin color="#B22222" height={80} width={80} />}
         {movies.map(({ id, title, poster, synopsis }) => (
           <FilmLine
             title={title}
