@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
@@ -47,10 +47,6 @@ export const SignUp: React.FC = () => {
       };
     }
   };
-
-  useEffect(() => {
-    console.log(signUpInfos);
-  }, [signUpInfos]);
 
   return (
     <MainContainer>

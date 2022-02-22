@@ -51,7 +51,9 @@ const PrivateRoute: React.FC<RouteProps> = ({
               <Component />
             </>
           ) : (
-            <Redirect to={{ pathname: '/login', state: { from: location } }} />
+            <Redirect
+              to={{ pathname: '/pagina-inicial', state: { from: location } }}
+            />
           );
         }
 
