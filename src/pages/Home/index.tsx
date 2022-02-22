@@ -1,12 +1,12 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { TailSpin } from 'react-loader-spinner';
+import Cookies from 'js-cookie';
 import { Modal, Input } from '../../components';
 import { FilmLine } from './components/FilmLine';
 import { FilmBox } from './components/FilmBox';
 import { MainContainer, ContentContainer } from './style';
 import Logo from '../../assets/icons/cinema.png';
 import api from '../../services/api';
-import { useAuth } from '../../hooks/auth';
 import { MoviesData } from './types';
 import { especificMovieMock, moviesSuggestionsMock, genresMock } from './mocks';
 import { useDebounceCallback } from '../../hooks/debounce';
@@ -15,15 +15,18 @@ export const Home: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
+  const token = Cookies.get('@training-project:token');
   const [movies, setMovies] = useState<MoviesData[]>([]);
   const [specificMovie, setSpecificMovie] =
     useState<MoviesData>(especificMovieMock);
-  const { ...authInfo } = useAuth();
 
   const loadMovies = useCallback(async () => {
-    const response = await fetch(
-      `${api}movies-users-user-id/${authInfo.user?.id}?text=${search}`,
-    );
+    const headers = {
+      authorization: `Bearer ${token.replace(/["]+/g, '')}`,
+    };
+    const response = await fetch(`${api}movies-users-user-id?text=${search}`, {
+      headers,
+    });
     const data = await response.json();
     setMovies(
       data?.map((movieUser: { movie: MoviesData }) => ({
@@ -36,16 +39,22 @@ export const Home: React.FC = () => {
       })),
     );
     setLoading(false);
-  }, [authInfo.user?.id, search]);
+  }, [search, token]);
 
   const debounceSearch = useDebounceCallback(loadMovies, 500);
 
-  const loadSpecificMovie = useCallback(async (movieId: string) => {
-    const response = await fetch(`${api}movies/${movieId}`);
-    const data = await response.json();
-    setSpecificMovie(data);
-    setShowModal(true);
-  }, []);
+  const loadSpecificMovie = useCallback(
+    async (movieId: string) => {
+      const headers = {
+        authorization: `Bearer ${token.replace(/["]+/g, '')}`,
+      };
+      const response = await fetch(`${api}movies/${movieId}`, { headers });
+      const data = await response.json();
+      setSpecificMovie(data);
+      setShowModal(true);
+    },
+    [token],
+  );
 
   useEffect(() => {
     debounceSearch();

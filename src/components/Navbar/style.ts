@@ -7,6 +7,7 @@ export const NavContainer = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 `;
 
 export const NavItem = styled.div`
@@ -34,4 +35,14 @@ export const Photo = styled.img`
   border-radius: 50%;
   object-fit: cover;
   margin-right: 10px;
+  cursor: pointer;
+`;
+
+export const OptionsContainer = styled.div`
+  background-color: ${({ theme }) => theme.colors.secondaryGray};
+  position: absolute;
+  top: 50px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
 `;

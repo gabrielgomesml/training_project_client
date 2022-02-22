@@ -40,7 +40,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     const token = Cookies.get('@training-project:token');
 
     if (user && token) {
-      return { user: JSON.parse(user), token };
+      return { user: JSON.parse(user), token: JSON.parse(token) };
     }
 
     return {};
