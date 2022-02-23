@@ -17,7 +17,7 @@ export const NavItem = styled.div`
   align-items: center;
   padding: 10px;
 
-  &:hover {
+  :hover {
     background-color: ${({ theme }) => theme.colors.secondaryRed};
   }
 
