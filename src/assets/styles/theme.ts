@@ -4,6 +4,8 @@ const theme = {
     mainBlack: '#2C2C2C',
     mainWhite: '#FFFFFF',
     mainGray: '#c9c9c9',
+    secondaryGray: '#8c8c8c',
+    secondaryRed: '#c14e4e',
   },
 };
 

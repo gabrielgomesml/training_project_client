@@ -9,5 +9,9 @@ export default createGlobalStyle`
   body {
     font-family: 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;
+    background-color: #c9c9c9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;

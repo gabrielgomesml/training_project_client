@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import Upload from '../../assets/icons/upload.png';
 import theme from '../../assets/styles/theme';
-import * as signUpActions from '../../store/actions-creators/index';
+import { useSignUpActions } from '../../store/actions-creators/index';
 import {
   MainContainer,
   ContentContainer,
@@ -26,7 +26,7 @@ export const SignUp: React.FC = () => {
   const [photoPreview, setPhotoPreview] = useState('');
 
   const { toggleStep, updateValue, loadRequest } = bindActionCreators(
-    signUpActions,
+    useSignUpActions(),
     dispatch,
   );
 
@@ -77,7 +77,7 @@ export const SignUp: React.FC = () => {
                 onChangeAction={updateValue}
                 label="email"
                 value={signUpInfos.email}
-                showError={!!signUpInfos.error}
+                showError={!!signUpInfos.errorMessage}
               />
               <Input
                 placeholderName="Senha*"
@@ -85,7 +85,7 @@ export const SignUp: React.FC = () => {
                 onChangeAction={updateValue}
                 label="password"
                 value={signUpInfos.password}
-                showError={!!signUpInfos.error}
+                showError={!!signUpInfos.errorMessage}
               />
               <Input
                 placeholderName="Repita sua senha*"
@@ -93,7 +93,7 @@ export const SignUp: React.FC = () => {
                 onChangeAction={updateValue}
                 label="confirmPassword"
                 value={signUpInfos.confirmPassword}
-                showError={!!signUpInfos.error}
+                showError={!!signUpInfos.errorMessage}
               />
             </>
           )}
@@ -105,7 +105,7 @@ export const SignUp: React.FC = () => {
                 onChangeAction={updateValue}
                 label="name"
                 value={signUpInfos.name}
-                showError={!!signUpInfos.error}
+                showError={!!signUpInfos.errorMessage}
               />
               <Input
                 placeholderName="Sobrenome*"
@@ -113,7 +113,7 @@ export const SignUp: React.FC = () => {
                 onChangeAction={updateValue}
                 label="surname"
                 value={signUpInfos.surname}
-                showError={!!signUpInfos.error}
+                showError={!!signUpInfos.errorMessage}
               />
               <Input
                 placeholderName="Telefone"
@@ -121,7 +121,7 @@ export const SignUp: React.FC = () => {
                 onChangeAction={updateValue}
                 label="phone"
                 value={signUpInfos.phone}
-                showError={!!signUpInfos.error}
+                showError={!!signUpInfos.errorMessage}
               />
             </>
           )}
@@ -146,7 +146,7 @@ export const SignUp: React.FC = () => {
             </InfoContainer>
           </ReviewContainer>
         )}
-        <ErrorText>{signUpInfos.error}</ErrorText>
+        <ErrorText>{signUpInfos.errorMessage}</ErrorText>
         <input
           style={{ display: 'none' }}
           id="photo_input"
