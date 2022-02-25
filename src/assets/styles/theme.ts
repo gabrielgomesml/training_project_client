@@ -8,6 +8,7 @@ const theme = {
     secondaryRed: '#c14e4e',
     mainGreen: '#009933',
     mainYellow: '#ffcc00',
+    mainOrange: '#ff9900',
   },
 };
 

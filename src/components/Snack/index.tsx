@@ -33,7 +33,7 @@ export const Snack: React.ElementType<SnackProps> = ({
         <SnackContainer style={{ backgroundColor: color }}>
           <Icon src={icon} />
           <p style={{ color: '#ffffff' }}>{text}</p>
-          <CloseIcon src={Close} />
+          <CloseIcon onClick={() => setShowSnack(false)} src={Close} />
         </SnackContainer>,
         portalDiv,
       )

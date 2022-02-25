@@ -6,6 +6,7 @@ import { Input, Button, Snack } from '../../components';
 import { MainContainer, ContentContainer } from './style';
 import useRequest from '../../hooks/useRequest';
 import { snacksDisplay } from '../../utils/snacksDisplay';
+import Warning from '../../assets/icons/warning.png';
 
 export const AddMovie: React.FC = () => {
   const [title, setTitle] = useState('');
@@ -109,7 +110,7 @@ export const AddMovie: React.FC = () => {
             onChangeAction={setTitle}
             width="100%"
             height="34px"
-            placeholderName="Título"
+            placeholderName="Título*"
           />
         </div>
         <div className="synopsis">
@@ -119,7 +120,7 @@ export const AddMovie: React.FC = () => {
             onChangeAction={setSynopsis}
             width="100%"
             height="34px"
-            placeholderName="Sinopse"
+            placeholderName="Sinopse*"
           />
         </div>
         <div className="release_year">
@@ -129,15 +130,36 @@ export const AddMovie: React.FC = () => {
             onChangeAction={setRelease_year}
             width="75%"
             height="34px"
-            placeholderName="Ano de lançamento"
+            placeholderName="Ano de lançamento*"
           />
         </div>
         <div className="select">
-          <Select options={genres} onChange={setSelectedGenres} isMulti />
+          <Select
+            placeholder="Gêneros*"
+            options={genres}
+            onChange={setSelectedGenres}
+            isMulti
+          />
         </div>
         <div className="add_button">
           <Button
-            handleButton={() => createMovie()}
+            handleButton={() => {
+              if (
+                title === '' ||
+                release_year === '' ||
+                synopsis === '' ||
+                genres === []
+              ) {
+                setSnackInfos({
+                  text: 'Você deve preencher todos os campos',
+                  color: theme.colors.mainOrange,
+                  icon: Warning,
+                });
+                setShowSnack(true);
+              } else {
+                createMovie();
+              }
+            }}
             width={150}
             height={34}
             backgroundColor={theme.colors.mainBlack}
