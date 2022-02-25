@@ -19,3 +19,20 @@ export const ContentContainer = styled.div`
   min-height: 100vh;
   padding: 30px 30px 0px 30px;
 `;
+
+export const TopContainer = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 30px;
+`;
+
+export const AddMovie = styled.div`
+  width: 100px;
+  height: 34px;
+  background-color: ${({ theme }) => theme.colors.mainBlack};
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
