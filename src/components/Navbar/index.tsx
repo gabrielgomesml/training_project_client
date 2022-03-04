@@ -26,6 +26,11 @@ export const Navbar: React.ElementType<NavbarProps> = ({ role, photo }) => {
             <NavText>Página Inicial</NavText>
           </NavItem>
         </Link>
+        <Link style={{ textDecoration: 'none' }} to="/discussoes">
+          <NavItem>
+            <NavText>Discussões</NavText>
+          </NavItem>
+        </Link>
         {role === 1 && (
           <Link style={{ textDecoration: 'none' }} to="/admin">
             <NavItem>

@@ -76,6 +76,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const signOut = useCallback(() => {
     Cookies.remove('@training-project:token');
     Cookies.remove('@training-project:user');
+    localStorage.removeItem('username');
 
     setData({});
   }, []);
