@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { SnackContainer, Icon, CloseIcon } from './style';
 import Close from '../../assets/icons/close.png';
@@ -11,7 +11,7 @@ export interface SnackProps {
   setShowSnack: (value: boolean) => void;
 }
 
-export const Snack: React.ElementType<SnackProps> = ({
+export const Snack: React.ComponentType<SnackProps> = ({
   text,
   color,
   icon,
@@ -19,16 +19,24 @@ export const Snack: React.ElementType<SnackProps> = ({
   setShowSnack,
 }) => {
   const portalDiv = document.getElementById('root');
+  const timeOutRef = useRef<ReturnType<typeof setTimeout>>();
 
   if (showSnack) {
-    setTimeout(() => {
+    timeOutRef.current = setTimeout(() => {
       setShowSnack(false);
     }, 5000);
   }
-  if (!showSnack) {
-    return null;
-  }
-  return portalDiv
+
+  useEffect(
+    () => () => {
+      if (timeOutRef.current) {
+        clearTimeout(timeOutRef.current);
+      }
+    },
+    [],
+  );
+
+  return portalDiv && showSnack
     ? ReactDOM.createPortal(
         <SnackContainer style={{ backgroundColor: color }}>
           <Icon src={icon} />
