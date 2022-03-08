@@ -5,3 +5,4 @@ export { SignUp } from './SignUp';
 export { Home } from './Home';
 export { Admin } from './Admin';
 export { AddMovie } from './AddMovie';
+export { Discussions } from './Discussions';

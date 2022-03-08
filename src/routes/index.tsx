@@ -2,7 +2,16 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import PrivateRoute from './PrivateRoutes';
 
-import { Login, NotFound, Test, SignUp, Home, Admin, AddMovie } from '../pages';
+import {
+  Login,
+  NotFound,
+  Test,
+  SignUp,
+  Home,
+  Admin,
+  AddMovie,
+  Discussions,
+} from '../pages';
 
 const PagesRoutes: React.FC = () => (
   <Switch>
@@ -13,6 +22,7 @@ const PagesRoutes: React.FC = () => (
     <PrivateRoute path="/test" component={Test} />
     <PrivateRoute path="/admin" component={Admin} isAdmin />
     <PrivateRoute path="/adicionar-filme" component={AddMovie} />
+    <PrivateRoute path="/discussoes" component={Discussions} />
     <Redirect exact from="/" to="/login" />
     <Route>
       <Redirect to="/not-found" />
