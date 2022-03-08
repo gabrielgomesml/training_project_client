@@ -3,12 +3,9 @@ import React, { useCallback, useEffect, useRef } from 'react';
 
 import { ModalBody, ModalContainer } from './style';
 
-type WithChildren<T = unknown> = T & { children?: React.ReactNode };
-
 interface IModalProps {
   showModal: any;
   setShowModal: any;
-  children: WithChildren;
 }
 
 export const Modal: React.ElementType<IModalProps> = ({
@@ -16,7 +13,7 @@ export const Modal: React.ElementType<IModalProps> = ({
   showModal,
   setShowModal,
 }) => {
-  const modalRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const closeModal = (e: any) => {
     if (modalRef.current === e.target) {

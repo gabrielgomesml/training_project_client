@@ -1,5 +1,6 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import Select from 'react-select';
+import { useHistory } from 'react-router-dom';
 import theme from '../../assets/styles/theme';
 import { Genre } from './types';
 import { Input, Button, Snack } from '../../components';
@@ -21,65 +22,93 @@ export const AddMovie: React.FC = () => {
     icon: null,
   });
 
+  const history = useHistory();
+  const redirectRef = useRef<ReturnType<typeof setTimeout>>();
+
   const [getRequest] = useRequest('get');
   const [postRequest] = useRequest('post');
 
+  const errorRedirect = useCallback(() => {
+    redirectRef.current = setTimeout(() => {
+      history.push('/pagina-inicial');
+    }, 6000);
+  }, [history]);
+
   const loadGenres = useCallback(async () => {
-    const response = await getRequest({
-      url: 'genres',
-      auth: true,
-    });
-    setGenres(
-      response.data.map((genre: { id: string; name: string }) => ({
-        value: genre.id,
-        label: genre.name,
-      })),
-    );
-  }, [getRequest]);
+    try {
+      const response = await getRequest({
+        url: 'genres',
+        auth: true,
+      });
+      setGenres(
+        response.data.map((genre: { id: string; name: string }) => ({
+          value: genre.id,
+          label: genre.name,
+        })),
+      );
+    } catch (error) {
+      snacksDisplay('LOADGENRES', setShowSnack, setSnackInfos);
+      errorRedirect();
+    }
+  }, [errorRedirect, getRequest]);
 
   const relateMovieToUser = useCallback(
     async (movie_id: string) => {
-      await postRequest({
-        url: 'movies-users',
-        auth: true,
-        body: { movie_id },
-      });
+      try {
+        await postRequest({
+          url: 'movies-users',
+          auth: true,
+          body: { movie_id },
+        });
+      } catch (error) {
+        snacksDisplay('RELATEMOVIETOUSER', setShowSnack, setSnackInfos);
+        errorRedirect();
+      }
     },
-    [postRequest],
+    [errorRedirect, postRequest],
   );
 
   const relateMovieToGenres = useCallback(
     async (movie_id: string, genre_id: string) => {
-      await postRequest({
-        url: 'genres-movies',
-        auth: true,
-        body: { movie_id, genre_id },
-      });
+      try {
+        await postRequest({
+          url: 'genres-movies',
+          auth: true,
+          body: { movie_id, genre_id },
+        });
+      } catch (error) {
+        snacksDisplay('RELATEMOVIETOGENRES', setShowSnack, setSnackInfos);
+        errorRedirect();
+      }
     },
-    [postRequest],
+    [errorRedirect, postRequest],
   );
 
   const createMovie = useCallback(async () => {
-    const response = await postRequest({
-      url: 'movies',
-      auth: true,
-      body: { title, synopsis, release_year },
-    });
-    if (response.status === 201) {
-      const { id } = response.data;
-      relateMovieToUser(id);
-      selectedGenres.forEach((genre: Genre) => {
-        relateMovieToGenres(id, genre.value);
+    try {
+      const response = await postRequest({
+        url: 'movies',
+        auth: true,
+        body: { title, synopsis, release_year },
       });
-      snacksDisplay(201, setShowSnack, setSnackInfos);
-      setRelease_year('');
-      setTitle('');
-      setSelectedGenres([]);
-      setSynopsis('');
-    } else {
-      snacksDisplay(response.status, setShowSnack, setSnackInfos);
+      if (response.status === 201) {
+        const { id } = response.data;
+        relateMovieToUser(id);
+        selectedGenres.forEach((genre: Genre) => {
+          relateMovieToGenres(id, genre.value);
+        });
+        snacksDisplay('CREATEMOVIE', setShowSnack, setSnackInfos, 201);
+        setRelease_year('');
+        setTitle('');
+        setSelectedGenres([]);
+        setSynopsis('');
+      }
+    } catch (error) {
+      snacksDisplay('CREATEMOVIE', setShowSnack, setSnackInfos);
+      errorRedirect();
     }
   }, [
+    errorRedirect,
     postRequest,
     relateMovieToGenres,
     relateMovieToUser,
@@ -92,6 +121,15 @@ export const AddMovie: React.FC = () => {
   useEffect(() => {
     loadGenres();
   }, [loadGenres]);
+
+  useEffect(
+    () => () => {
+      if (redirectRef.current) {
+        clearTimeout(redirectRef.current);
+      }
+    },
+    [],
+  );
 
   return (
     <MainContainer>
