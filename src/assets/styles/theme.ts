@@ -6,6 +6,9 @@ const theme = {
     mainGray: '#c9c9c9',
     secondaryGray: '#8c8c8c',
     secondaryRed: '#c14e4e',
+    mainGreen: '#009933',
+    mainYellow: '#ffcc00',
+    mainOrange: '#ff9900',
   },
 };
 

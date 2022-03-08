@@ -1,10 +1,16 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { TailSpin } from 'react-loader-spinner';
 import Cookies from 'js-cookie';
+import { Link } from 'react-router-dom';
 import { Modal, Input } from '../../components';
 import { FilmLine } from './components/FilmLine';
 import { FilmBox } from './components/FilmBox';
-import { MainContainer, ContentContainer } from './style';
+import {
+  MainContainer,
+  ContentContainer,
+  AddMovie,
+  TopContainer,
+} from './style';
 import Logo from '../../assets/icons/cinema.png';
 import api from '../../services/api';
 import { MoviesData } from './types';
@@ -63,23 +69,34 @@ export const Home: React.FC = () => {
   return (
     <MainContainer>
       <ContentContainer>
-        <Input
-          type="text"
-          value={search}
-          onChangeAction={setSearch}
-          width="100%"
-          height="34px"
-          placeholderName="Pesquise um filme..."
-        />
-        {loading && <TailSpin color="#B22222" height={80} width={80} />}
-        {movies.map(({ id, title, poster, synopsis }) => (
-          <FilmLine
-            title={title}
-            text={synopsis || 'Sem sinopse fornecida'}
-            image={poster || Logo}
-            handleClick={() => loadSpecificMovie(id)}
+        <TopContainer>
+          <Input
+            type="text"
+            value={search}
+            onChangeAction={setSearch}
+            width="100%"
+            height="34px"
+            placeholderName="Pesquise um filme..."
           />
-        ))}
+          <Link to="/adicionar-filme" style={{ textDecoration: 'none' }}>
+            <AddMovie>
+              <h1 style={{ color: '#ffffff' }}>+</h1>
+            </AddMovie>
+          </Link>
+        </TopContainer>
+        {loading && <TailSpin color="#B22222" height={80} width={80} />}
+        {movies.length === 0 && loading !== true ? (
+          <h3>Filmes não encontrados.</h3>
+        ) : (
+          movies.map(({ id, title, poster, synopsis }) => (
+            <FilmLine
+              title={title}
+              text={synopsis || 'Sem sinopse fornecida'}
+              image={poster || Logo}
+              handleClick={() => loadSpecificMovie(id)}
+            />
+          ))
+        )}
         <Modal showModal={showModal} setShowModal={setShowModal}>
           <FilmBox
             title={specificMovie.title}
