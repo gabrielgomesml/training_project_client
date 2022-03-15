@@ -54,7 +54,7 @@ export const Discussions: React.FC = () => {
         )}
         {username && (
           <>
-            <Room />
+            {/* <Room /> */}
             <Message />
           </>
         )}

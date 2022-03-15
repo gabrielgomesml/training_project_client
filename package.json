@@ -28,7 +28,8 @@
     "redux-thunk": "^2.4.1",
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.4.1",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "websocket": "^1.0.34"
   },
   "devDependencies": {
     "@babel/core": "^7.16.12",
@@ -44,6 +45,7 @@
     "@types/react-slick": "^0.23.8",
     "@types/socket.io-client": "^3.0.0",
     "@types/styled-components": "^5.1.21",
+    "@types/websocket": "^1.0.5",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
     "babel-loader": "^8.2.3",

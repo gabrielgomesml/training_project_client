@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useEffect,
 } from 'react';
-import io, { Socket } from 'socket.io-client';
+import { EventEmitter } from 'events';
 import EVENTS from '../pages/Discussions/config/events';
 
 type Message = {
@@ -16,7 +16,8 @@ type Message = {
 };
 
 interface SocketContextProps {
-  socket: Socket;
+  // socket: Socket;
+  ws: WebSocket;
   username?: string;
   setUsername: Function;
   messages?: Message[];
@@ -25,10 +26,19 @@ interface SocketContextProps {
   rooms: any;
 }
 
-const socket = io('http://localhost:3001/');
+interface EventMsg {
+  eventType: string;
+  event: string;
+  payload: any;
+}
+
+const ws = new WebSocket('ws://localhost:3001/');
+
+const serverEmitter = new EventEmitter();
+const clientEmitter = new EventEmitter();
 
 const SocketContext = createContext<SocketContextProps>({
-  socket,
+  ws,
   setUsername: () => false,
   setMessages: () => false,
   rooms: {},
@@ -41,27 +51,35 @@ export const SocketsProvider: React.FC = ({ children }) => {
   const [rooms, setRooms] = useState({});
   const [messages, setMessages] = useState<Message[]>([]);
 
-  socket.on(EVENTS.SERVER.ROOMS, (value) => {
-    setRooms(value);
-  });
+  ws.onopen = () => {
+    console.log('Websocket connected');
+  };
 
-  socket.on(EVENTS.SERVER.JOINED_ROOM, (value) => {
-    setRoomId(value);
-    setMessages([]);
-  });
+  ws.onmessage = (message) => {
+    const msg: EventMsg = JSON.parse(message.data);
+
+    if (msg.eventType === 'serverEvent') {
+      serverEmitter.emit(msg.event, msg.payload);
+    } else if (msg.eventType === 'clientEvent') {
+      clientEmitter.emit(msg.event, msg.payload);
+    }
+  };
+
+  ws.onclose = () => {
+    console.log('Connection closed');
+  };
 
   useEffect(() => {
-    socket.on(EVENTS.SERVER.ROOM_MESSAGE, ({ message, username, time }) => {
-      if (!document.hasFocus()) {
-        document.title = 'Nova menssagem...';
-      }
+    serverEmitter.addListener(EVENTS.SERVER.ROOM_MESSAGE, (payload) => {
+      const { message, username, time } = payload;
       setMessages((messages) => [...messages, { message, username, time }]);
     });
   }, []);
 
   const value = useMemo(
     () => ({
-      socket,
+      // socket,
+      ws,
       username,
       setUsername,
       roomId,
