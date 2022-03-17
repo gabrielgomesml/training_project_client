@@ -23,6 +23,8 @@ interface SocketContextProps {
   messages?: Message[];
   setMessages: Function;
   roomId?: string;
+  setRoomId: Function;
+  clientId?: string;
   rooms: any;
 }
 
@@ -39,8 +41,10 @@ const clientEmitter = new EventEmitter();
 
 const SocketContext = createContext<SocketContextProps>({
   ws,
+  clientId: '',
   setUsername: () => false,
   setMessages: () => false,
+  setRoomId: () => '',
   rooms: {},
   messages: [],
 });
@@ -49,6 +53,7 @@ export const SocketsProvider: React.FC = ({ children }) => {
   const [username, setUsername] = useState('');
   const [roomId, setRoomId] = useState('');
   const [rooms, setRooms] = useState({});
+  const [clientId, setClientId] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
 
   ws.onopen = () => {
@@ -58,7 +63,10 @@ export const SocketsProvider: React.FC = ({ children }) => {
   ws.onmessage = (message) => {
     const msg: EventMsg = JSON.parse(message.data);
 
-    if (msg.eventType === 'serverEvent') {
+    if (msg.eventType === 'connectionEvent') {
+      const { userId } = msg.payload;
+      setClientId(userId);
+    } else if (msg.eventType === 'serverEvent') {
       serverEmitter.emit(msg.event, msg.payload);
     } else if (msg.eventType === 'clientEvent') {
       clientEmitter.emit(msg.event, msg.payload);
@@ -69,25 +77,48 @@ export const SocketsProvider: React.FC = ({ children }) => {
     console.log('Connection closed');
   };
 
+  serverEmitter.addListener(EVENTS.SERVER.ROOMS, (payload) => {
+    const { roomsData } = payload;
+    setRooms(roomsData);
+  });
+
+  serverEmitter.addListener(
+    `${EVENTS.SERVER.JOINED_ROOM}/${clientId}`,
+    (payload) => {
+      const { roomKey } = payload;
+      setRoomId(roomKey);
+      setMessages([]);
+    },
+  );
+
   useEffect(() => {
-    serverEmitter.addListener(EVENTS.SERVER.ROOM_MESSAGE, (payload) => {
-      const { message, username, time } = payload;
-      setMessages((messages) => [...messages, { message, username, time }]);
-    });
-  }, []);
+    serverEmitter.addListener(
+      `${EVENTS.SERVER.ROOM_MESSAGE}/${roomId}`,
+      (payload) => {
+        console.log(
+          'Entrou aqui no server room message e esse é o payload: ',
+          payload,
+        );
+        const { message, username, time } = payload;
+        setMessages((messages) => [...messages, { message, username, time }]);
+      },
+    );
+  }, [roomId]);
 
   const value = useMemo(
     () => ({
       // socket,
       ws,
+      clientId,
       username,
       setUsername,
       roomId,
+      setRoomId,
       rooms,
       messages,
       setMessages,
     }),
-    [messages, roomId, rooms, username],
+    [clientId, messages, roomId, rooms, username],
   );
   return (
     <SocketContext.Provider value={value}>{children}</SocketContext.Provider>

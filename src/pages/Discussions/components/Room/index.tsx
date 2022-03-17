@@ -12,7 +12,7 @@ import {
 } from './style';
 
 export const Room: React.FC = () => {
-  const { ws, roomId, rooms } = useSocket();
+  const { ws, roomId, rooms, clientId, setRoomId, setMessages } = useSocket();
   const newRoomRef = useRef<any>(null);
 
   const handleCreateRoom = () => {
@@ -23,12 +23,12 @@ export const Room: React.FC = () => {
     if (!String(roomName).trim()) {
       return;
     }
-    // socket.emit(EVENTS.CLIENT.CREATE_ROOM, { roomName });
+
     ws.send(
       JSON.stringify({
         eventType: 'clientEvent',
-        event: EVENTS.CLIENT.CREATE_ROOM,
-        payload: { roomName },
+        event: `${EVENTS.CLIENT.CREATE_ROOM}/${clientId}`,
+        payload: { roomName, currentRoomKey: roomId },
       }),
     );
 
@@ -39,15 +39,17 @@ export const Room: React.FC = () => {
     if (key === roomId) {
       return;
     }
-    // socket.emit(EVENTS.CLIENT.JOIN_ROOM, key);
 
     ws.send(
       JSON.stringify({
         eventType: 'clientEvent',
-        event: EVENTS.CLIENT.JOIN_ROOM,
-        payload: { roomId: key },
+        event: `${EVENTS.CLIENT.JOIN_ROOM}/${clientId}`,
+        payload: { userKey: clientId, roomKey: key, currentRoomKey: roomId },
       }),
     );
+
+    setRoomId(key);
+    setMessages([]);
   };
 
   return (

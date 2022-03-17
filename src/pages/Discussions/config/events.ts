@@ -9,6 +9,7 @@ const EVENTS = {
     ROOMS: 'ROOMS',
     JOINED_ROOM: 'JOINED_ROOM',
     ROOM_MESSAGE: 'ROOM_MESSAGE',
+    SEND_CLIENT_ID: 'SEND_CLIENT_ID',
   },
 };
 

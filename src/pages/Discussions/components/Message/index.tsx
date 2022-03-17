@@ -12,7 +12,7 @@ import { Button } from '../../../../components';
 import theme from '../../../../assets/styles/theme';
 
 export const Message: React.FC = () => {
-  const { ws, messages, username } = useSocket();
+  const { ws, messages, username, roomId, clientId } = useSocket();
   const newMessageRef = useRef<any>(null);
 
   const handleSendMessage = () => {
@@ -25,10 +25,11 @@ export const Message: React.FC = () => {
     ws.send(
       JSON.stringify({
         eventType: 'clientEvent',
-        event: EVENTS.CLIENT.SEND_ROOM_MESSAGE,
+        event: `${EVENTS.CLIENT.SEND_ROOM_MESSAGE}/${clientId}`,
         payload: {
           message,
           username,
+          roomId,
         },
       }),
     );
