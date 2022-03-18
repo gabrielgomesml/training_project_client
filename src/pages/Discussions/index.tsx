@@ -23,12 +23,6 @@ export const Discussions: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (usernameRef) {
-      usernameRef.current.value = localStorage.getItem('username') || '';
-    }
-  }, []);
-
   return (
     <MainContainer>
       <ContentContainer>

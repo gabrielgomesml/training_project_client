@@ -33,6 +33,7 @@ export const Room: React.FC = () => {
     );
 
     newRoomRef.current.value = '';
+    setMessages([]);
   };
 
   const handleJoinRoom = (key: string) => {

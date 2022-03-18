@@ -37,6 +37,14 @@ export const Message: React.FC = () => {
     newMessageRef.current.value = '';
   };
 
+  if (!roomId) {
+    return (
+      <div style={{ marginTop: '30px' }}>
+        <p>Entre em uma sala para abrir o chat</p>
+      </div>
+    );
+  }
+
   return (
     <MainContainer>
       <Messages>

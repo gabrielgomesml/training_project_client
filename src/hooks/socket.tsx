@@ -95,10 +95,6 @@ export const SocketsProvider: React.FC = ({ children }) => {
     serverEmitter.addListener(
       `${EVENTS.SERVER.ROOM_MESSAGE}/${roomId}`,
       (payload) => {
-        console.log(
-          'Entrou aqui no server room message e esse é o payload: ',
-          payload,
-        );
         const { message, username, time } = payload;
         setMessages((messages) => [...messages, { message, username, time }]);
       },
