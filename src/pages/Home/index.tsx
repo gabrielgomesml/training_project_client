@@ -1,7 +1,8 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { TailSpin } from 'react-loader-spinner';
 import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Modal, Input } from '../../components';
 import { FilmLine } from './components/FilmLine';
 import { FilmBox } from './components/FilmBox';
@@ -25,6 +26,8 @@ export const Home: React.FC = () => {
   const [movies, setMovies] = useState<MoviesData[]>([]);
   const [specificMovie, setSpecificMovie] =
     useState<MoviesData>(especificMovieMock);
+
+  const sectionRef = useRef<any>();
 
   const loadMovies = useCallback(async () => {
     const headers = {
@@ -58,6 +61,7 @@ export const Home: React.FC = () => {
       const data = await response.json();
       setSpecificMovie(data);
       setShowModal(true);
+      disableBodyScroll(sectionRef);
     },
     [token],
   );
@@ -66,8 +70,14 @@ export const Home: React.FC = () => {
     debounceSearch();
   }, [debounceSearch, search]);
 
+  useEffect(() => {
+    if (!showModal) {
+      enableBodyScroll(sectionRef);
+    }
+  }, [showModal]);
+
   return (
-    <MainContainer>
+    <MainContainer ref={sectionRef}>
       <ContentContainer>
         <TopContainer>
           <Input
