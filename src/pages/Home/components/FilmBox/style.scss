@@ -1,0 +1,91 @@
+
+@import 'settings';
+
+.main-container {
+  width: 760px;
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 40px 20px;
+  gap: 20px;
+  border-radius: 10px;
+
+  @include lg {
+    width: 550px;
+  }
+
+  @include md {
+    width: 430px;
+  }
+
+  @include sm {
+
+    width: 320px;
+  }
+}
+
+.image {
+  width: 150px;
+  height: 150px;
+  min-width: 150px;
+  min-height: 150px;
+  border-radius: 50%;
+  border: 1px solid;
+}
+
+.content-container {
+  display: flex;
+  gap: 20px;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  background-color: $red;
+  padding: 5px 15px;
+  border-radius: 20px;
+}
+
+.slick-container {
+  display: flex;
+  width: 95%;
+  min-height: 10px;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+
+  .slick-prev:before,
+  .slick-next:before {
+    color: $black;
+  }
+}
+
+.suggestion-box {
+  height: 100px;
+  background-color: $red;
+  margin: 0px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(https://img.elo7.com.br/product/original/2747CBC/big-poster-filme-aladdin-2019-lo01-tamanho-90x60-cm-nerd.jpg);
+
+  background-size: cover;
+  cursor: pointer;
+}
+
+.suggestion-title {
+  color: $white;
+  font-weight: bold;
+}

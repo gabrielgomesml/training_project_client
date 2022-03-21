@@ -21,4 +21,14 @@ export const ContentContainer = styled.div`
   flex-direction: column;
   white-space: nowrap;
   overflow: hidden;
+
+  h1 {
+    @media (max-width: 640px) {
+      font-size: 20px;
+    }
+
+    @media (max-width: 470px) {
+      font-size: 16px;
+    }
+  }
 `;

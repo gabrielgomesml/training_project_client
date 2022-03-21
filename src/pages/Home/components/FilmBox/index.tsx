@@ -1,18 +1,9 @@
 import React from 'react';
 import Slider from 'react-slick';
-import {
-  MainContainer,
-  Image,
-  ContentContainer,
-  TextContainer,
-  TagsContainer,
-  Tag,
-  SlickContainer,
-  SuggestionBox,
-  SuggestionTitle,
-} from './style';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+
+import './style.scss';
 
 type Suggestion = {
   id: string;
@@ -45,33 +36,33 @@ export const FilmBox: React.ElementType<FilmBoxProps> = ({
     slidesToScroll: 1,
   };
   return (
-    <MainContainer>
-      <ContentContainer>
-        <Image src={image} />
-        <TextContainer>
+    <div className="main-container">
+      <div className="content-container">
+        <img className="image" src={image} alt="movie-poster" />
+        <div className="text-container">
           <h1>{title}</h1>
           <p>{release_year}</p>
-          <TagsContainer>
+          <div className="tags-container">
             {genres.map((genre) => (
-              <Tag>
+              <div className="tag">
                 <p style={{ color: 'white' }}>{genre}</p>
-              </Tag>
+              </div>
             ))}
-          </TagsContainer>
-        </TextContainer>
-      </ContentContainer>
+          </div>
+        </div>
+      </div>
       <p>{text}</p>
-      <SlickContainer>
+      <div className="slick-container">
         <Slider {...settings}>
           {suggestions.map((suggestion) => (
             <div>
-              <SuggestionBox>
-                <SuggestionTitle>{suggestion.title}</SuggestionTitle>
-              </SuggestionBox>
+              <div className="suggestion-box">
+                <p className="suggestion-title">{suggestion.title}</p>
+              </div>
             </div>
           ))}
         </Slider>
-      </SlickContainer>
-    </MainContainer>
+      </div>
+    </div>
   );
 };
