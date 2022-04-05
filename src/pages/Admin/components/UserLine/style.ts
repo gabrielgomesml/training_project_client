@@ -8,11 +8,11 @@ export const MainContainer = styled.div`
   position: relative;
 
   .popcorn_toggle.react-toggle--checked .react-toggle-track {
-    background-color: ${({ theme }) => theme.colors.mainRed};
+    background-color: ${({ theme }) => theme.colors?.mainRed};
   }
 
   .popcorn_toggle.react-toggle--checked .react-toggle-thumb {
-    border-color: ${({ theme }) => theme.colors.mainRed};
+    border-color: ${({ theme }) => theme.colors?.mainRed};
   }
 `;
 

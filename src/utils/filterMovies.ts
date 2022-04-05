@@ -1,4 +1,4 @@
-import { MoviesUser } from '../__mocks__/moviesUser';
+import { MoviesUser } from '../__mocks__/mockData/moviesUser';
 
 const filterMovies = (
   data: MoviesUser[],

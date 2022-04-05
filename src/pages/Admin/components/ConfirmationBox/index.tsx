@@ -21,13 +21,13 @@ export const ConfirmationBox: React.ElementType<ConfirmationBoxProps> = ({
     </p>
     <ButtonContainer>
       <Button
-        style={{ backgroundColor: theme.colors.mainGray }}
+        style={{ backgroundColor: theme.colors?.mainGray }}
         onClick={() => cancelButton()}
       >
         Cancelar
       </Button>
       <Button
-        style={{ backgroundColor: theme.colors.mainRed, color: '#ffffff' }}
+        style={{ backgroundColor: theme.colors?.mainRed, color: '#ffffff' }}
         onClick={() => confirmButton()}
       >
         Confirmar

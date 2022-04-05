@@ -24,7 +24,7 @@ const Admin: React.FC<AdminProps> = ({ setLoading }) => {
 
   const loadUsers = useCallback(async () => {
     const headers = {
-      authorization: `Bearer ${token.replace(/["]+/g, '')}`,
+      authorization: `Bearer ${token?.replace(/["]+/g, '')}`,
     };
     const response = await fetch(`${api}users`, {
       headers,
@@ -40,7 +40,7 @@ const Admin: React.FC<AdminProps> = ({ setLoading }) => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        authorization: `Bearer ${token.replace(/["]+/g, '')}`,
+        authorization: `Bearer ${token?.replace(/["]+/g, '')}`,
       },
       body: JSON.stringify({ active: !selectedUser.active }),
     };
@@ -58,6 +58,7 @@ const Admin: React.FC<AdminProps> = ({ setLoading }) => {
   return (
     <MainContainer>
       <ContentContainer>
+        <h1 style={{ alignSelf: 'flex-start' }}>Usuários</h1>
         {users.map(
           ({
             id,
@@ -70,6 +71,7 @@ const Admin: React.FC<AdminProps> = ({ setLoading }) => {
             photo_address,
           }) => (
             <UserLine
+              key={id}
               name={`${name} ${surname}`}
               email={email}
               phone={phone || '-'}
