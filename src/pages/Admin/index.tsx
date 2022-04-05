@@ -6,12 +6,13 @@ import { UserLine } from './components/UserLine';
 import { ConfirmationBox } from './components/ConfirmationBox';
 import api from '../../services/api';
 import { UsersData } from './types';
+import loader from '../../hoc/loader';
 
 interface AdminProps {
   setLoading: (value: boolean) => void;
 }
 
-export const Admin: React.FC<AdminProps> = ({ setLoading }) => {
+const Admin: React.FC<AdminProps> = ({ setLoading }) => {
   const [showModal, setShowModal] = useState(false);
   const [users, setUsers] = useState<UsersData[]>([]);
   const [selectedUser, setSelectedUser] = useState({
@@ -98,3 +99,5 @@ export const Admin: React.FC<AdminProps> = ({ setLoading }) => {
     </MainContainer>
   );
 };
+
+export default loader(Admin);

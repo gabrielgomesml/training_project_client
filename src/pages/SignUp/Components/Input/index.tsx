@@ -77,7 +77,9 @@ export const Input: React.ElementType<InputProps> = ({
         break;
 
       case 'password':
-        setErrorText(match);
+        if (typeof match === 'string') {
+          setErrorText(match);
+        }
         break;
 
       default:

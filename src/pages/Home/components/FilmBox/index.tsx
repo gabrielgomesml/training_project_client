@@ -1,7 +1,7 @@
 import React from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+// import Slider from 'react-slick';
+// import 'slick-carousel/slick/slick.css';
+// import 'slick-carousel/slick/slick-theme.css';
 
 import './style.scss';
 
@@ -25,35 +25,34 @@ export const FilmBox: React.ElementType<FilmBoxProps> = ({
   text,
   genres,
   image,
-  suggestions,
-}) => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow:
-      suggestions && suggestions.length < 3 ? suggestions.length : 3,
-    slidesToScroll: 1,
-  };
-  return (
-    <div className="main-container">
-      <div className="content-container">
-        <img className="image" src={image} alt="movie-poster" />
-        <div className="text-container">
-          <h1>{title}</h1>
-          <p>{release_year}</p>
-          <div className="tags-container">
-            {genres.map((genre) => (
-              <div className="tag">
-                <p style={{ color: 'white' }}>{genre}</p>
-              </div>
-            ))}
-          </div>
+  // suggestions,
+}) => (
+  // const settings = {
+  //   dots: true,
+  //   infinite: true,
+  //   speed: 500,
+  //   slidesToShow:
+  //     suggestions && suggestions.length < 3 ? suggestions.length : 3,
+  //   slidesToScroll: 1,
+  // };
+  <div className="main-container">
+    <div className="content-container">
+      <img className="image" src={image} alt="movie-poster" />
+      <div className="text-container">
+        <h1 data-testid="film-box-title">{title}</h1>
+        <p>{release_year}</p>
+        <div className="tags-container">
+          {genres.map((genre) => (
+            <div className="tag" key={genre}>
+              <p style={{ color: 'white' }}>{genre}</p>
+            </div>
+          ))}
         </div>
       </div>
-      <p>{text}</p>
-      <div className="slick-container">
-        <Slider {...settings}>
+    </div>
+    <p>{text}</p>
+    <div className="slick-container">
+      {/* <Slider {...settings}>
           {suggestions.map((suggestion) => (
             <div>
               <div className="suggestion-box">
@@ -61,8 +60,7 @@ export const FilmBox: React.ElementType<FilmBoxProps> = ({
               </div>
             </div>
           ))}
-        </Slider>
-      </div>
+        </Slider> */}
     </div>
-  );
-};
+  </div>
+);

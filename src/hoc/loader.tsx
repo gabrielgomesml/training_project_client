@@ -29,6 +29,7 @@ const loader = (
         <>
           {this.state.loading && (
             <div
+              data-testid="loader-component"
               className="loader"
               style={{
                 width: '760px',

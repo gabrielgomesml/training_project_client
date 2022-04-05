@@ -16,12 +16,13 @@ import api from '../../services/api';
 import { MoviesData } from './types';
 import { especificMovieMock, moviesSuggestionsMock, genresMock } from './mocks';
 import { useDebounceCallback } from '../../hooks/debounce';
+import loader from '../../hoc/loader';
 
 interface HomeProps {
   setLoading: (value: boolean) => void;
 }
 
-export const Home: React.FC<HomeProps> = ({ setLoading }) => {
+const Home: React.FC<HomeProps> = ({ setLoading }) => {
   const [showModal, setShowModal] = useState(false);
   const [search, setSearch] = useState('');
   const token = Cookies.get('@training-project:token');
@@ -33,7 +34,7 @@ export const Home: React.FC<HomeProps> = ({ setLoading }) => {
 
   const loadMovies = useCallback(async () => {
     const headers = {
-      authorization: `Bearer ${token.replace(/["]+/g, '')}`,
+      authorization: `Bearer ${token?.replace(/["]+/g, '')}`,
     };
     const response = await fetch(`${api}movies-users-user-id?text=${search}`, {
       headers,
@@ -57,7 +58,7 @@ export const Home: React.FC<HomeProps> = ({ setLoading }) => {
   const loadSpecificMovie = useCallback(
     async (movieId: string) => {
       const headers = {
-        authorization: `Bearer ${token.replace(/["]+/g, '')}`,
+        authorization: `Bearer ${token?.replace(/["]+/g, '')}`,
       };
       const response = await fetch(`${api}movies/${movieId}`, { headers });
       const data = await response.json();
@@ -101,6 +102,7 @@ export const Home: React.FC<HomeProps> = ({ setLoading }) => {
         ) : (
           movies.map(({ id, title, poster, synopsis }) => (
             <FilmLine
+              key={id}
               title={title}
               text={synopsis || 'Sem sinopse fornecida'}
               image={poster || Logo}
@@ -110,6 +112,7 @@ export const Home: React.FC<HomeProps> = ({ setLoading }) => {
         )}
         <Modal showModal={showModal} setShowModal={setShowModal}>
           <FilmBox
+            key={specificMovie.id}
             title={specificMovie.title}
             release_year={specificMovie.release_year}
             text={specificMovie.synopsis || 'Sem sinopse fornecida'}
@@ -122,3 +125,5 @@ export const Home: React.FC<HomeProps> = ({ setLoading }) => {
     </MainContainer>
   );
 };
+
+export default loader(Home);

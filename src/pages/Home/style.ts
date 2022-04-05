@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MainContainer = styled.section`
-  background-color: ${({ theme }) => theme.colors.mainGray};
+  background-color: ${({ theme }) => theme.colors?.mainGray};
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -41,7 +41,7 @@ export const TopContainer = styled.div`
 export const AddMovie = styled.div`
   width: 100px;
   height: 34px;
-  background-color: ${({ theme }) => theme.colors.mainBlack};
+  background-color: ${({ theme }) => theme.colors?.mainBlack};
   border-radius: 10px;
   display: flex;
   justify-content: center;
