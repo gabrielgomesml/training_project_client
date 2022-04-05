@@ -18,6 +18,18 @@ export const ContentContainer = styled.div`
   width: 760px;
   min-height: 100vh;
   padding: 30px 30px 0px 30px;
+
+  @media (max-width: 1024px) {
+    width: 550px;
+  }
+
+  @media (max-width: 640px) {
+    width: 430px;
+  }
+
+  @media (max-width: 470px) {
+    width: 320px;
+  }
 `;
 
 export const TopContainer = styled.div`

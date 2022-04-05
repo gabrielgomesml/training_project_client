@@ -35,10 +35,11 @@ export const MessageTextArea = styled.textarea`
 `;
 
 export const MessageContainer = styled.div`
-  padding: 10px 10px 10px 10px;
+  padding: 10px 30px 10px 10px;
   background-color: rgba(256, 256, 256, 0.4);
   margin: 5px 10px 5px 10px;
   width: auto;
+  position: relative;
 `;
 
 export const Messages = styled.div`

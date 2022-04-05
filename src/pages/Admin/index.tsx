@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Cookies from 'js-cookie';
-import { TailSpin } from 'react-loader-spinner';
 import { MainContainer, ContentContainer } from './style';
 import { Modal } from '../../components';
 import { UserLine } from './components/UserLine';
@@ -8,9 +7,12 @@ import { ConfirmationBox } from './components/ConfirmationBox';
 import api from '../../services/api';
 import { UsersData } from './types';
 
-export const Admin: React.FC = () => {
+interface AdminProps {
+  setLoading: (value: boolean) => void;
+}
+
+export const Admin: React.FC<AdminProps> = ({ setLoading }) => {
   const [showModal, setShowModal] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<UsersData[]>([]);
   const [selectedUser, setSelectedUser] = useState({
     id: '',
@@ -29,7 +31,7 @@ export const Admin: React.FC = () => {
     const data = await response.json();
     setUsers(data);
     setLoading(false);
-  }, [token]);
+  }, [setLoading, token]);
 
   const changeAccess = useCallback(async () => {
     const requestOptions = {
@@ -55,7 +57,6 @@ export const Admin: React.FC = () => {
   return (
     <MainContainer>
       <ContentContainer>
-        {loading && <TailSpin color="#B22222" height={80} width={80} />}
         {users.map(
           ({
             id,

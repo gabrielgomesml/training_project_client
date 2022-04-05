@@ -1,0 +1,46 @@
+// Colors
+
+$white: #FFFFFF;
+$black: #2C2C2C;
+$red: #B22222;
+
+
+// Breakpoints
+$small: 470px;
+$medium: 640px;
+$large: 1024px;
+$xlarge: 1200px;
+$xxlarge: 1440px;
+
+
+// Mixins
+
+@mixin sm {
+  @media (max-width: #{$small}) {
+      @content;
+  }
+}
+
+@mixin md {
+  @media (max-width: #{$medium}) {
+      @content;
+  }
+}
+
+@mixin lg {
+  @media (max-width: #{$large}) {
+      @content;
+  }
+}
+
+@mixin xl {
+  @media (max-width: #{$xlarge}) {
+      @content;
+  }
+}
+
+@mixin xxl {
+  @media (max-width: #{$xxlarge}) {
+      @content;
+  }
+}

@@ -1,7 +1,7 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { TailSpin } from 'react-loader-spinner';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Modal, Input } from '../../components';
 import { FilmLine } from './components/FilmLine';
 import { FilmBox } from './components/FilmBox';
@@ -17,14 +17,19 @@ import { MoviesData } from './types';
 import { especificMovieMock, moviesSuggestionsMock, genresMock } from './mocks';
 import { useDebounceCallback } from '../../hooks/debounce';
 
-export const Home: React.FC = () => {
+interface HomeProps {
+  setLoading: (value: boolean) => void;
+}
+
+export const Home: React.FC<HomeProps> = ({ setLoading }) => {
   const [showModal, setShowModal] = useState(false);
   const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(true);
   const token = Cookies.get('@training-project:token');
   const [movies, setMovies] = useState<MoviesData[]>([]);
   const [specificMovie, setSpecificMovie] =
     useState<MoviesData>(especificMovieMock);
+
+  const sectionRef = useRef<any>();
 
   const loadMovies = useCallback(async () => {
     const headers = {
@@ -45,7 +50,7 @@ export const Home: React.FC = () => {
       })),
     );
     setLoading(false);
-  }, [search, token]);
+  }, [search, setLoading, token]);
 
   const debounceSearch = useDebounceCallback(loadMovies, 500);
 
@@ -58,6 +63,7 @@ export const Home: React.FC = () => {
       const data = await response.json();
       setSpecificMovie(data);
       setShowModal(true);
+      disableBodyScroll(sectionRef);
     },
     [token],
   );
@@ -66,8 +72,14 @@ export const Home: React.FC = () => {
     debounceSearch();
   }, [debounceSearch, search]);
 
+  useEffect(() => {
+    if (!showModal) {
+      enableBodyScroll(sectionRef);
+    }
+  }, [showModal]);
+
   return (
-    <MainContainer>
+    <MainContainer ref={sectionRef}>
       <ContentContainer>
         <TopContainer>
           <Input
@@ -84,8 +96,7 @@ export const Home: React.FC = () => {
             </AddMovie>
           </Link>
         </TopContainer>
-        {loading && <TailSpin color="#B22222" height={80} width={80} />}
-        {movies.length === 0 && loading !== true ? (
+        {movies.length === 0 ? (
           <h3>Filmes não encontrados.</h3>
         ) : (
           movies.map(({ id, title, poster, synopsis }) => (

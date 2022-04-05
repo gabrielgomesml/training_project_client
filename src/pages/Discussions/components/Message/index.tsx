@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSocket } from '../../../../hooks/socket';
 import EVENTS from '../../config/events';
 import {
@@ -12,7 +12,7 @@ import { Button } from '../../../../components';
 import theme from '../../../../assets/styles/theme';
 
 export const Message: React.FC = () => {
-  const { socket, roomId, messages, username, setMessages } = useSocket();
+  const { ws, messages, username, roomId, clientId } = useSocket();
   const newMessageRef = useRef<any>(null);
 
   const handleSendMessage = () => {
@@ -22,19 +22,17 @@ export const Message: React.FC = () => {
       return;
     }
 
-    socket.emit(EVENTS.CLIENT.SEND_ROOM_MESSAGE, { roomId, message, username });
-
-    const date = new Date();
-    if (messages) {
-      setMessages([
-        ...messages,
-        {
-          username: 'Você',
+    ws.send(
+      JSON.stringify({
+        eventType: 'clientEvent',
+        event: `${EVENTS.CLIENT.SEND_ROOM_MESSAGE}/${clientId}`,
+        payload: {
           message,
-          time: `${date.getHours()}:${date.getMinutes()}`,
+          username,
+          roomId,
         },
-      ]);
-    }
+      }),
+    );
 
     newMessageRef.current.value = '';
   };
@@ -46,12 +44,35 @@ export const Message: React.FC = () => {
       </div>
     );
   }
+
   return (
     <MainContainer>
       <Messages>
-        {messages?.map(({ message }) => (
+        {messages?.map(({ message, time, username }) => (
           <MessageContainer>
             <p>{message}</p>
+            <p
+              style={{
+                position: 'absolute',
+                right: '3px',
+                bottom: '3px',
+                fontSize: '10px',
+                color: theme.colors.mainRed,
+              }}
+            >
+              {time}
+            </p>
+            <p
+              style={{
+                position: 'absolute',
+                right: '3px',
+                top: '3px',
+                fontSize: '10px',
+                color: theme.colors.mainRed,
+              }}
+            >
+              {username}
+            </p>
           </MessageContainer>
         ))}
       </Messages>
