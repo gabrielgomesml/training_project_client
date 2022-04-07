@@ -72,7 +72,7 @@ export const SignUp: React.FC = () => {
           {signUpInfos.step === 'Dados de Login' && (
             <>
               <Input
-                placeholderName="Email*"
+                placeholderName="E-mail*"
                 type="email"
                 onChangeAction={updateValue}
                 label="email"
@@ -159,7 +159,7 @@ export const SignUp: React.FC = () => {
             handleButton={() => toggleStep('forward')}
             width={314}
             height={34}
-            backgroundColor={theme.colors.mainRed}
+            backgroundColor={theme.colors?.mainRed}
             text="Prosseguir"
           />
         ) : (
@@ -179,7 +179,7 @@ export const SignUp: React.FC = () => {
               }
               width={314}
               height={34}
-              backgroundColor={theme.colors.mainRed}
+              backgroundColor={theme.colors?.mainRed}
               text="Cadastre-se"
             />
           </Link>

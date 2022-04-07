@@ -97,8 +97,8 @@ export const Input: React.ElementType<InputProps> = ({
         style={{
           border: `solid ${
             (errorText !== '' || (value === '' && type !== 'tel')) && showError
-              ? theme.colors.mainRed
-              : theme.colors.mainBlack
+              ? theme.colors?.mainRed
+              : theme.colors?.mainBlack
           } 1px`,
           borderRadius: '3px',
         }}
