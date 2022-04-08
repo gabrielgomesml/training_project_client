@@ -14,7 +14,7 @@ export const FilmLine: React.ElementType<FilmLineProps> = ({
   image,
   handleClick,
 }) => (
-  <MainContainer onClick={handleClick}>
+  <MainContainer data-testid="film-line-component" onClick={handleClick}>
     <Image src={image} />
     <ContentContainer>
       <h1>{title}</h1>

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const MainContainer = styled.div`
   width: 560px;
-  background-color: ${({ theme }) => theme.colors.mainWhite};
+  background-color: ${({ theme }) => theme.colors?.mainWhite};
   display: flex;
   flex-direction: column;
   padding: 20px 20px 40px 20px;

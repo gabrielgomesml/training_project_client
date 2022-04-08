@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const MainContainer = styled.div`
   width: 760px;
-  background-color: ${({ theme }) => theme.colors.mainWhite};
+  background-color: ${({ theme }) => theme.colors?.mainWhite};
   display: flex;
   flex-direction: column;
   padding: 20px 20px 40px 20px;
@@ -38,7 +38,7 @@ export const TagsContainer = styled.div`
 `;
 
 export const Tag = styled.div`
-  background-color: ${({ theme }) => theme.colors.mainRed};
+  background-color: ${({ theme }) => theme.colors?.mainRed};
   padding: 5px 15px;
   border-radius: 20px;
 `;
@@ -53,7 +53,7 @@ export const SlickContainer = styled.div`
 
   .slick-prev:before,
   .slick-next:before {
-    color: ${({ theme }) => theme.colors.mainBlack};
+    color: ${({ theme }) => theme.colors?.mainBlack};
   }
 `;
 
@@ -72,6 +72,6 @@ export const SuggestionBox = styled.div`
 `;
 
 export const SuggestionTitle = styled.p`
-  color: ${({ theme }) => theme.colors.mainWhite};
+  color: ${({ theme }) => theme.colors?.mainWhite};
   font-weight: bold;
 `;

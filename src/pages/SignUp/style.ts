@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MainContainer = styled.section`
-  background-color: ${({ theme }) => theme.colors.mainGray};
+  background-color: ${({ theme }) => theme.colors?.mainGray};
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -32,7 +32,7 @@ export const Title = styled.p`
 `;
 
 export const BackButton = styled.button`
-  background-color: ${({ theme }) => theme.colors.mainWhite};
+  background-color: ${({ theme }) => theme.colors?.mainWhite};
   border: none;
   border-radius: 5px;
   width: 70px;
@@ -67,7 +67,7 @@ export const ErrorText = styled.p`
   font-style: normal;
   font-weight: bold;
   margin-bottom: 10px;
-  color: ${({ theme }) => theme.colors.mainBlack};
+  color: ${({ theme }) => theme.colors?.mainBlack};
 `;
 
 export const ReviewContainer = styled.div`

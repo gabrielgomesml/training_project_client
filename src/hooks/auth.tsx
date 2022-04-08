@@ -27,7 +27,7 @@ interface SignInCredentials {
 
 interface AuthContextProps {
   user?: User;
-  signIn(credentials: SignInCredentials): Promise<void>;
+  signIn(credentials: SignInCredentials): Promise<number>;
   signOut(): void;
 }
 
@@ -69,6 +69,8 @@ export const AuthProvider: React.FC = ({ children }) => {
         Cookies.set('@training-project:token', JSON.stringify(token));
         history.push('/pagina-inicial');
       }
+
+      return response.status;
     },
     [history],
   );
