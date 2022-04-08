@@ -10,6 +10,8 @@ interface SnackInfos {
 
 export const snacksDisplay = (
   func:
+    | 'LOADUSERS'
+    | 'CHANGEUSERS'
     | 'LOADGENRES'
     | 'CREATEMOVIE'
     | 'RELATEMOVIETOUSER'
@@ -55,6 +57,22 @@ export const snacksDisplay = (
     case 'RELATEMOVIETOGENRES':
       setInfos({
         text: 'Erro ao relacionar os gêneros com o filme. Tente novamente mais tarde.',
+        color: theme.colors.mainRed,
+        icon: Error,
+      });
+      setDisplay(true);
+      break;
+    case 'LOADUSERS':
+      setInfos({
+        text: 'Erro ao carregar usuários. Tente novamente mais tarde.',
+        color: theme.colors.mainRed,
+        icon: Error,
+      });
+      setDisplay(true);
+      break;
+    case 'CHANGEUSERS':
+      setInfos({
+        text: 'Permissionamento do usuário não alterado. Tente novamente mais tarde.',
         color: theme.colors.mainRed,
         icon: Error,
       });
